@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitoreo en tiempo real de Geo-APIs</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    h1 { margin-bottom: .5rem; }
+    .api-block { margin-bottom: 1.5rem; }
+    .api-block h2 { margin-bottom: .25rem; }
+    pre { 
+      background: #f4f4f4; 
+      padding: 1rem; 
+      border-radius: 4px; 
+      overflow-x: auto; 
+      max-height: 300px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Monitoreo Geo-APIs (ipapi.co y GeoJS)</h1>
+  <p>Se actualizará cada 10 segundos.</p>
+
+  <div class="api-block">
+    <h2>ipapi.co/json/</h2>
+    <pre id="ipapi-output">Cargando…</pre>
+  </div>
+
+  <div class="api-block">
+    <h2>get.geojs.io/v1/ip/geo.json</h2>
+    <pre id="geojs-output">Cargando…</pre>
+  </div>
+
+  <script>
+    async function fetchAndDisplay() {
+      const ipapiEl = document.getElementById('ipapi-output');
+      const geojsEl = document.getElementById('geojs-output');
+
+      try {
+        const [a, b] = await Promise.all([
+          fetch('https://ipapi.co/json/')
+            .then(r => r.json())
+            .catch(err => ({ error: err.message })),
+          fetch('https://get.geojs.io/v1/ip/geo.json')
+            .then(r => r.json())
+            .catch(err => ({ error: err.message }))
+        ]);
+
+        const timestamp = new Date().toLocaleString('es-MX', {
+          timeZone: 'America/Monterrey',
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          hour12: false
+        });
+
+        ipapiEl.textContent = 
+          `Timestamp: ${timestamp}\n` +
+          JSON.stringify(a, null, 2);
+
+        geojsEl.textContent = 
+          `Timestamp: ${timestamp}\n` +
+          JSON.stringify(b, null, 2);
+
+      } catch (err) {
+        ipapiEl.textContent = 'Error general: ' + err.message;
+        geojsEl.textContent = 'Error general: ' + err.message;
+      }
+    }
+
+    // Ejecutar al cargar y luego cada 10 segundos
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchAndDisplay();
+      setInterval(fetchAndDisplay, 10_000);
+    });
+  </script>
+
+</body>
+</html>
