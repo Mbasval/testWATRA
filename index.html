@@ -1,80 +1,348 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Monitoreo en tiempo real de Geo-APIs WA Business TRA 2025</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Mirror</title>
+
   <style>
-    body { font-family: sans-serif; padding: 1rem; }
-    h1 { margin-bottom: .5rem; }
-    .api-block { margin-bottom: 1.5rem; }
-    .api-block h2 { margin-bottom: .25rem; }
-    pre { 
-      background: #f4f4f4; 
-      padding: 1rem; 
-      border-radius: 4px; 
-      overflow-x: auto; 
-      max-height: 300px;
+    :root {
+      --bg: #000;
+      --yellow: #ffd400;
+      --blue: #39aaff;
+      --red: #ff1018;
+      --gray: #818891;
+      --dim: #3b4148;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--gray);
+      font-family: "Courier New", monospace;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 28px 32px;
+      position: relative;
+      background:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
+        #000;
+      background-size: 100% 28px, 28px 100%;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .counter {
+      color: var(--yellow);
+      font-size: clamp(1rem, 2vw, 1.8rem);
+      line-height: 1.1;
+    }
+
+    .click {
+      color: var(--yellow);
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: .8;
+      letter-spacing: .04em;
+      font-weight: bold;
+    }
+
+    .privacy {
+      color: var(--gray);
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      line-height: .8;
+      text-align: right;
+      font-weight: bold;
+    }
+
+    .blue-line {
+      margin-top: 10px;
+      color: var(--blue);
+      font-size: clamp(2.4rem, 6vw, 6.5rem);
+      line-height: .85;
+      font-weight: bold;
+      letter-spacing: .04em;
+    }
+
+    .cursor {
+      display: inline-block;
+      animation: blink 1s infinite;
+    }
+
+    .main-alert {
+      color: var(--red);
+      font-size: clamp(2.4rem, 6vw, 6rem);
+      line-height: .9;
+      font-weight: bold;
+      margin-top: 10px;
+      white-space: nowrap;
+    }
+
+    .board {
+      margin-top: 22px;
+      display: grid;
+      gap: 4px;
+      max-width: 1500px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 90px minmax(160px, 360px) 1fr;
+      gap: 24px;
+      font-size: clamp(1.1rem, 3.5vw, 4rem);
+      line-height: .95;
+      opacity: .35;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+
+    .row.loaded {
+      opacity: 1;
+    }
+
+    .row.hot {
+      color: var(--red);
+    }
+
+    .row.blue {
+      color: var(--blue);
+    }
+
+    .label {
+      color: inherit;
+    }
+
+    .value {
+      color: inherit;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .disclaimer {
+      position: fixed;
+      left: 32px;
+      bottom: 24px;
+      max-width: 760px;
+      color: var(--gray);
+      font-size: .9rem;
+      line-height: 1.4;
+      background: rgba(0,0,0,.75);
+      padding: 10px 0;
+    }
+
+    @keyframes blink {
+      0%, 45% { opacity: 1; }
+      46%, 100% { opacity: 0; }
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        padding: 20px;
+      }
+
+      .top {
+        display: block;
+      }
+
+      .privacy {
+        text-align: left;
+        margin-top: 20px;
+      }
+
+      .main-alert {
+        white-space: normal;
+      }
+
+      .row {
+        grid-template-columns: 54px 1fr;
+        gap: 10px;
+        font-size: 1.25rem;
+        line-height: 1.1;
+        margin-bottom: 10px;
+      }
+
+      .value {
+        grid-column: 2;
+        white-space: normal;
+      }
+
+      .disclaimer {
+        position: static;
+        margin-top: 40px;
+      }
     }
   </style>
 </head>
+
 <body>
+  <main class="hero">
+    <div class="top">
+      <div>
+        <div class="counter">#<br><span id="visitor-number">125</span></div>
+        <div class="click">CLICK HERE↗</div>
+      </div>
 
-  <h1>Monitoreo Geo-APIs (ipapi.co y GeoJS) WA Business TRA 2025</h1>
-  <p>Se actualizará cada 10 segundos.</p>
+      <div class="privacy">
+        PRIVACY↗<br>
+        <span style="color: var(--yellow);">!!!</span>
+      </div>
+    </div>
 
-  <div class="api-block">
-    <h2>ipapi.co/json/</h2>
-    <pre id="ipapi-output">Cargando…</pre>
-  </div>
+    <div class="blue-line">
+      >>> YOUR DATA:<span class="cursor">_</span>
+    </div>
 
-  <div class="api-block">
-    <h2>get.geojs.io/v1/ip/geo.json</h2>
-    <pre id="geojs-output">Cargando…</pre>
-  </div>
+    <div class="main-alert" id="main-alert">
+      DETECTING VISITOR...
+    </div>
+
+    <section class="board" id="data-board">
+      <div class="row hot" data-key="ip">
+        <span>#126</span><span class="label">IP ADDRESS</span><span class="value">LOADING...</span>
+      </div>
+
+      <div class="row" data-key="location">
+        <span>#127</span><span class="label">LOCATION</span><span class="value">LOADING...</span>
+      </div>
+
+      <div class="row" data-key="isp">
+        <span>#128</span><span class="label">ISP / ORG</span><span class="value">LOADING...</span>
+      </div>
+
+      <div class="row blue" data-key="device">
+        <span>#129</span><span class="label">DEVICE</span><span class="value">LOADING...</span>
+      </div>
+
+      <div class="row" data-key="screen">
+        <span>#130</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
+      </div>
+
+      <div class="row" data-key="language">
+        <span>#131</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
+      </div>
+
+      <div class="row" data-key="timezone">
+        <span>#132</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
+      </div>
+
+      <div class="row" data-key="referrer">
+        <span>#133</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
+      </div>
+
+      <div class="row hot" data-key="privacy">
+        <span>#134</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      This demo does not store, sell, or share your data. It only shows what your browser and network can expose when you enter a website.
+    </p>
+  </main>
 
   <script>
-    async function fetchAndDisplay() {
-      const ipapiEl = document.getElementById('ipapi-output');
-      const geojsEl = document.getElementById('geojs-output');
+    function getBrowserInfo() {
+      const ua = navigator.userAgent;
 
+      let browser = "UNKNOWN";
+      if (ua.includes("Chrome") && !ua.includes("Edg") && !ua.includes("OPR")) browser = "CHROME";
+      else if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "SAFARI";
+      else if (ua.includes("Firefox")) browser = "FIREFOX";
+      else if (ua.includes("Edg")) browser = "EDGE";
+      else if (ua.includes("OPR")) browser = "OPERA";
+
+      let os = "UNKNOWN";
+      if (ua.includes("Windows")) os = "WINDOWS";
+      else if (ua.includes("Mac OS")) os = "MACOS";
+      else if (ua.includes("Android")) os = "ANDROID";
+      else if (ua.includes("iPhone") || ua.includes("iPad")) os = "IOS";
+      else if (ua.includes("Linux")) os = "LINUX";
+
+      return `${browser} / ${os}`;
+    }
+
+    function setRow(key, value, delay = 0) {
+      const row = document.querySelector(`[data-key="${key}"]`);
+      if (!row) return;
+
+      setTimeout(() => {
+        row.querySelector(".value").textContent = value || "UNKNOWN";
+        row.classList.add("loaded");
+      }, delay);
+    }
+
+    function getBestGeoData(ipapi, geojs) {
+      return {
+        ip: ipapi.ip || geojs.ip || "UNKNOWN",
+        city: ipapi.city || geojs.city || "UNKNOWN",
+        region: ipapi.region || geojs.region || "UNKNOWN",
+        country: ipapi.country_name || geojs.country || "UNKNOWN",
+        org: ipapi.org || geojs.organization_name || "UNKNOWN",
+        timezone: ipapi.timezone || geojs.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || "UNKNOWN"
+      };
+    }
+
+    async function fetchAndDisplay() {
       try {
-        const [a, b] = await Promise.all([
-          fetch('https://ipapi.co/json/')
+        const [ipapi, geojs] = await Promise.all([
+          fetch("https://ipapi.co/json/")
             .then(r => r.json())
             .catch(err => ({ error: err.message })),
-          fetch('https://get.geojs.io/v1/ip/geo.json')
+
+          fetch("https://get.geojs.io/v1/ip/geo.json")
             .then(r => r.json())
             .catch(err => ({ error: err.message }))
         ]);
 
-        const timestamp = new Date().toLocaleString('es-MX', {
-          timeZone: 'America/Monterrey',
-          year: 'numeric', month: '2-digit', day: '2-digit',
-          hour: '2-digit', minute: '2-digit', second: '2-digit',
-          hour12: false
-        });
+        const data = getBestGeoData(ipapi, geojs);
 
-        ipapiEl.textContent = 
-          `Timestamp: ${timestamp}\n` +
-          JSON.stringify(a, null, 2);
+        const timestamp = new Date().toLocaleString("en-US", {
+          timeZone: data.timezone,
+          weekday: "short",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZoneName: "short"
+        }).toUpperCase();
 
-        geojsEl.textContent = 
-          `Timestamp: ${timestamp}\n` +
-          JSON.stringify(b, null, 2);
+        document.getElementById("main-alert").textContent =
+          `${data.ip}  ${timestamp}`;
+
+        setRow("ip", data.ip, 100);
+        setRow("location", `${data.city}, ${data.region}, ${data.country}`, 300);
+        setRow("isp", data.org, 500);
+        setRow("device", getBrowserInfo(), 700);
+        setRow("screen", `${window.screen.width} x ${window.screen.height}`, 900);
+        setRow("language", navigator.language.toUpperCase(), 1100);
+        setRow("timezone", data.timezone.toUpperCase(), 1300);
+        setRow("referrer", document.referrer ? document.referrer : "DIRECT / HIDDEN", 1500);
+        setRow("privacy", "NOT STORED. SHOWN LOCALLY.", 1700);
 
       } catch (err) {
-        ipapiEl.textContent = 'Error general: ' + err.message;
-        geojsEl.textContent = 'Error general: ' + err.message;
+        document.getElementById("main-alert").textContent =
+          "ERROR DETECTING VISITOR";
       }
     }
 
-    // Ejecutar al cargar y luego cada 10 segundos
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener("DOMContentLoaded", () => {
       fetchAndDisplay();
-      setInterval(fetchAndDisplay, 10_000);
+
+      // Optional: refresh every 10 seconds, like your original version.
+      setInterval(fetchAndDisplay, 10000);
     });
   </script>
-
 </body>
 </html>
