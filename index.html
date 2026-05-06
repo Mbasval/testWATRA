@@ -146,7 +146,7 @@
       color: var(--gray);
       font-size: var(--number-font);
       line-height: 0.92;
-      white-space: nowrap;
+      white-space: pre-line;
       padding-top: 0;
     }
 
@@ -169,10 +169,10 @@
       bottom: 18px;
       margin: 0;
       max-width: min(92ch, calc(100vw - (var(--hero-pad) * 2)));
-      color: var(--gray);
+      color: #000;
       font-size: clamp(0.64rem, 0.82vw, 0.8rem);
       line-height: 1.28;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(235, 235, 235, 0.8);
       padding: 8px 0;
       text-transform: uppercase;
     }
@@ -288,65 +288,65 @@
       <div class="row" data-key="timezone">
         <span class="num">#9</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
       </div>
-      <div class="row blue" data-key="cpu">
-        <span class="num">#10</span><span class="label">CPU / RAM</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row blue" data-key="touch">
-        <span class="num">#11</span><span class="label">TOUCH</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row" data-key="referrer">
-        <span class="num">#12</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row" data-key="asn">
-        <span class="num">#13</span><span class="label">ASN</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row" data-key="hostname">
-        <span class="num">#14</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row" data-key="currency">
-        <span class="num">#15</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row" data-key="postal">
-        <span class="num">#16</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row" data-key="coordinates">
-        <span class="num">#17</span><span class="label">COORDS</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row" data-key="geometa">
-        <span class="num">#18</span><span class="label">GEO META</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row hot" data-key="network">
-        <span class="num">#19</span><span class="label">NETWORK ID</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row hot" data-key="risk">
-        <span class="num">#20</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row blue" data-key="fingerprint">
-        <span class="num">#21</span><span class="label">FINGERPRINT</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row blue" data-key="behavior">
-        <span class="num">#22</span><span class="label">BEHAVIOR</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row blue" data-key="persistence">
-        <span class="num">#23</span><span class="label">PERSISTENCE</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row blue" data-key="adtech">
-        <span class="num">#24</span><span class="label">AD-TECH</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row hot" data-key="sources">
-        <span class="num">#25</span><span class="label">API SOURCES</span><span class="value">LOADING...</span>
-      </div>
-      <div class="row hot" data-key="privacy">
-        <span class="num">#26</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
-      </div>
       <div class="row green" data-key="realtime">
-        <span class="num">#27</span><span class="label">LIVE INPUTS</span><span class="value">LOADING...</span>
+        <span class="num">#10</span><span class="label">LIVE INPUTS</span><span class="value">LOADING...</span>
       </div>
       <div class="row green" data-key="idle">
-        <span class="num">#28</span><span class="label">IDLE DETECT</span><span class="value">LOADING...</span>
+        <span class="num">#11</span><span class="label">IDLE DETECT</span><span class="value">LOADING...</span>
       </div>
       <div class="row green" data-key="profile">
-        <span class="num">#29</span><span class="label">AD PROFILE</span><span class="value">LOADING...</span>
+        <span class="num">#12</span><span class="label">AD PROFILE</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="cpu">
+        <span class="num">#13</span><span class="label">CPU / RAM</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="touch">
+        <span class="num">#14</span><span class="label">TOUCH</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="referrer">
+        <span class="num">#15</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="asn">
+        <span class="num">#16</span><span class="label">ASN</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="hostname">
+        <span class="num">#17</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="currency">
+        <span class="num">#18</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="postal">
+        <span class="num">#19</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="coordinates">
+        <span class="num">#20</span><span class="label">COORDS</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="geometa">
+        <span class="num">#21</span><span class="label">GEO META</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row hot" data-key="network">
+        <span class="num">#22</span><span class="label">NETWORK ID</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row hot" data-key="risk">
+        <span class="num">#23</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="fingerprint">
+        <span class="num">#24</span><span class="label">FINGERPRINT</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="behavior">
+        <span class="num">#25</span><span class="label">BEHAVIOR</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="persistence">
+        <span class="num">#26</span><span class="label">PERSISTENCE</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="adtech">
+        <span class="num">#27</span><span class="label">AD-TECH</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row hot" data-key="sources">
+        <span class="num">#28</span><span class="label">API SOURCES</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row hot" data-key="privacy">
+        <span class="num">#29</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
       </div>
     </section>
 
@@ -799,14 +799,13 @@
     async function fetchAndDisplay() {
       try {
         const data = await fetchAllData();
-        const timestamp = new Date().toLocaleString("en-US", {
+      const timestamp = new Date().toLocaleString("en-US", {
           timeZone: data.timezone !== "UNKNOWN" ? data.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone,
           weekday: "short",
           month: "short",
           day: "2-digit",
           hour: "2-digit",
           minute: "2-digit",
-          second: "2-digit",
           timeZoneName: "short"
         }).toUpperCase();
 
