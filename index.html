@@ -92,6 +92,15 @@
       overflow-wrap: anywhere;
     }
 
+    .main-alert .warning-copy {
+      display: block;
+    }
+
+    .main-alert .live-time {
+      display: block;
+      margin-top: 6px;
+    }
+
     .board {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -188,12 +197,12 @@
   <main class="hero">
     <div class="top">
       <div>
-        <div class="click">YOUR DATA EXPOSED</div>
+        <div class="click">CLICK TO REVEAL</div>
       </div>
     </div>
 
     <div class="blue-line">
-      >>> This started before you clicked:<span class="cursor">_</span>
+      >>> YOUR DATA:<span class="cursor">_</span>
     </div>
 
     <div class="main-alert" id="main-alert">DETECTING VISITOR...</div>
@@ -271,6 +280,15 @@
       <div class="row hot" data-key="privacy">
         <span>#24</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
       </div>
+      <div class="row blue" data-key="realtime">
+        <span>#25</span><span class="label">LIVE INPUTS</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row hot" data-key="idle">
+        <span>#26</span><span class="label">IDLE DETECT</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row hot" data-key="profile">
+        <span>#27</span><span class="label">AD PROFILE</span><span class="value">LOADING...</span>
+      </div>
     </section>
 
     <p class="disclaimer">
@@ -279,6 +297,17 @@
   </main>
 
   <script>
+    const interactionState = {
+      mouseMoves: 0,
+      scrolls: 0,
+      clicks: 0,
+      touches: 0,
+      keys: 0,
+      maxScrollY: 0,
+      lastActiveAt: Date.now(),
+      idlePeriods: 0
+    };
+
     function getBrowserInfo() {
       const ua = navigator.userAgent;
 
@@ -355,6 +384,130 @@
       ];
 
       return parts.join(" | ").toUpperCase();
+    }
+
+    function estimateDistanceFromCenter(city, coords) {
+      if (!city || city === "UNKNOWN" || !coords || coords === "UNKNOWN") {
+        return "CITY CENTER DISTANCE ESTIMATE UNAVAILABLE";
+      }
+
+      const [latRaw, lonRaw] = coords.split(",").map((value) => Number.parseFloat(value.trim()));
+      if (Number.isNaN(latRaw) || Number.isNaN(lonRaw)) {
+        return "CITY CENTER DISTANCE ESTIMATE UNAVAILABLE";
+      }
+
+      const pseudoDistance = Math.max(2, Math.min(18, Math.round((Math.abs(latRaw % 1) + Math.abs(lonRaw % 1)) * 12)));
+      return `${pseudoDistance} KM FROM ${city.toUpperCase()} CENTER`;
+    }
+
+    function updateActivity() {
+      interactionState.lastActiveAt = Date.now();
+    }
+
+    function getIdleMessage() {
+      const idleSeconds = Math.floor((Date.now() - interactionState.lastActiveAt) / 1000);
+      const attention = idleSeconds >= 12 ? "LOW" : idleSeconds >= 6 ? "MEDIUM" : "HIGH";
+      return `IDLE PERIODS DETECTED: ${interactionState.idlePeriods} / ATTENTION SCORE: ${attention} / CURRENT IDLE: ${idleSeconds}S`;
+    }
+
+    function getRealtimeInputsMessage() {
+      return [
+        `MOVES:${interactionState.mouseMoves}`,
+        `SCROLLS:${interactionState.scrolls}`,
+        `CLICKS:${interactionState.clicks}`,
+        `TOUCHES:${interactionState.touches}`,
+        `KEYS:${interactionState.keys}`,
+        `MAX SCROLL:${Math.round(interactionState.maxScrollY)}PX`
+      ].join(" / ");
+    }
+
+    function buildProfile(data) {
+      const profile = [];
+      const hour = new Date().getHours();
+
+      if ((data.org || "").match(/cloud|fiber|telecom|communications|net|broadband/i)) {
+        profile.push("CONNECTED HOME OR OFFICE USER");
+      }
+      if ((navigator.language || "").toLowerCase().startsWith("en")) {
+        profile.push("ENGLISH SPEAKER");
+      } else if ((navigator.language || "").toLowerCase().startsWith("es")) {
+        profile.push("SPANISH SPEAKER");
+      }
+      if ((navigator.deviceMemory || 0) >= 8 || window.devicePixelRatio >= 2) {
+        profile.push("HIGH-END DEVICE");
+      }
+      if ((navigator.hardwareConcurrency || 0) >= 8) {
+        profile.push("TECHNOLOGY USER");
+      }
+      if (hour >= 22 || hour <= 4) {
+        profile.push("NIGHT ACTIVITY PATTERNS");
+      } else if (hour >= 18) {
+        profile.push("EVENING ACTIVITY PATTERNS");
+      } else {
+        profile.push("DAYTIME ACTIVITY PATTERNS");
+      }
+      if (data.risk.includes("VPN") || data.risk.includes("PROXY")) {
+        profile.push("PRIVACY-SEEKING TRAFFIC");
+      }
+
+      return `LIKELY AD PROFILE: ${profile.slice(0, 4).join(" / ") || "GENERAL WEB USER"}`;
+    }
+
+    function updateClock() {
+      const clockTarget = document.getElementById("live-time");
+      if (!clockTarget) return;
+
+      const now = new Date();
+      const formatted = now.toLocaleString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        timeZoneName: "short"
+      }).toUpperCase();
+
+      clockTarget.textContent = formatted;
+    }
+
+    function attachLiveTrackers() {
+      window.addEventListener("mousemove", () => {
+        interactionState.mouseMoves += 1;
+        updateActivity();
+      }, { passive: true });
+
+      window.addEventListener("scroll", () => {
+        interactionState.scrolls += 1;
+        interactionState.maxScrollY = Math.max(interactionState.maxScrollY, window.scrollY);
+        updateActivity();
+      }, { passive: true });
+
+      window.addEventListener("click", () => {
+        interactionState.clicks += 1;
+        updateActivity();
+      }, { passive: true });
+
+      window.addEventListener("touchstart", () => {
+        interactionState.touches += 1;
+        updateActivity();
+      }, { passive: true });
+
+      window.addEventListener("keydown", () => {
+        interactionState.keys += 1;
+        updateActivity();
+      });
+
+      setInterval(() => {
+        const idleSeconds = Math.floor((Date.now() - interactionState.lastActiveAt) / 1000);
+        if (idleSeconds > 0 && idleSeconds % 12 === 0) {
+          interactionState.idlePeriods += 1;
+          interactionState.lastActiveAt = Date.now() - 1000;
+        }
+        setRow("realtime", getRealtimeInputsMessage());
+        setRow("idle", getIdleMessage());
+        updateClock();
+      }, 1000);
     }
 
     async function getJson(url) {
@@ -559,13 +712,17 @@
           day: "2-digit",
           hour: "2-digit",
           minute: "2-digit",
+          second: "2-digit",
           timeZoneName: "short"
         }).toUpperCase();
 
-        document.getElementById("main-alert").textContent = `${data.ip}  ${timestamp}`;
+        document.getElementById("main-alert").innerHTML = `
+          <span class="warning-copy">NOW IMAGINE: 300 WEBSITES. SHARING THIS DATA. FOR YEARS. WITHOUT YOU SEEING IT.</span>
+          <span class="live-time" id="live-time">${timestamp}</span>
+        `;
 
         setRow("ip", data.ip, 50);
-        setRow("location", `${data.city}, ${data.region}, ${data.country}`, 100);
+        setRow("location", `${data.city}, ${data.region}, ${data.country} / ${estimateDistanceFromCenter(data.city, data.coordinates)}`, 100);
         setRow("org", data.org, 150);
         setRow("device", getBrowserInfo(), 200);
         setRow("platform", (navigator.platform || "UNKNOWN").toUpperCase(), 250);
@@ -588,12 +745,17 @@
         setRow("adtech", summarizeAdTech(), 1100);
         setRow("sources", data.sources || "NO PUBLIC SOURCES RESPONDED", 1150);
         setRow("privacy", "NOT STORED. SHOWN LOCALLY.", 1200);
+        setRow("realtime", getRealtimeInputsMessage(), 1250);
+        setRow("idle", getIdleMessage(), 1300);
+        setRow("profile", buildProfile(data), 1350);
+        updateClock();
       } catch (error) {
         document.getElementById("main-alert").textContent = "ERROR DETECTING VISITOR";
       }
     }
 
     window.addEventListener("DOMContentLoaded", () => {
+      attachLiveTrackers();
       fetchAndDisplay();
       setInterval(fetchAndDisplay, 15000);
     });
