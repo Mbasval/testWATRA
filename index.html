@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Privacy Mirror</title>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap");
+
     :root {
       --bg: #000000;
       --yellow: #ffc800;
@@ -20,7 +22,7 @@
       --row-font: clamp(0.8rem, 1.25vw, 1.55rem);
       --number-font: clamp(0.5rem, 0.72vw, 0.82rem);
       --number-col: 34px;
-      --label-col: minmax(70px, 120px);
+      --label-col: minmax(86px, 132px);
     }
 
     * {
@@ -37,7 +39,7 @@
 
     body {
       color: var(--gray);
-      font-family: "Courier New", monospace;
+      font-family: "IBM Plex Mono", "Courier New", monospace;
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -47,7 +49,7 @@
       min-height: 100dvh;
       padding: var(--hero-pad);
       display: grid;
-      grid-template-rows: auto auto auto 1fr auto;
+      grid-template-rows: auto auto auto auto 1fr auto;
       gap: var(--hero-gap);
       background:
         linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
@@ -113,7 +115,7 @@
       grid-template-columns: 1fr;
       gap: 0;
       align-content: start;
-      padding-bottom: 60px;
+      padding-bottom: 140px;
     }
 
     .row {
@@ -133,11 +135,17 @@
       opacity: 1;
     }
 
+    .row.green .num,
+    .row.green .label,
+    .row.green .value {
+      color: var(--green);
+    }
+
     .num {
       color: var(--gray);
       font-size: var(--number-font);
       line-height: 0.92;
-      white-space: pre-line;
+      white-space: nowrap;
       padding-top: 0;
     }
 
@@ -163,9 +171,28 @@
       color: var(--gray);
       font-size: clamp(0.64rem, 0.82vw, 0.8rem);
       line-height: 1.28;
-      background: rgba(0, 0, 0, 0.72);
+      background: rgba(0, 0, 0, 0.48);
       padding: 8px 0;
       text-transform: uppercase;
+    }
+
+    .footer {
+      margin-top: 48px;
+      text-align: center;
+      color: var(--gray);
+      font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    .footer a {
+      color: var(--gray);
+      text-decoration: none;
+    }
+
+    .bottom-space {
+      height: 40vh;
+      min-height: 240px;
     }
 
     @keyframes blink {
@@ -178,7 +205,7 @@
         --row-font: clamp(0.74rem, 1.4vw, 1.1rem);
         --number-font: clamp(0.48rem, 0.68vw, 0.72rem);
         --number-col: 30px;
-        --label-col: minmax(64px, 98px);
+        --label-col: minmax(72px, 108px);
       }
     }
 
@@ -187,10 +214,10 @@
         --headline: clamp(2.2rem, 12vw, 4.2rem);
         --subheadline: clamp(1.1rem, 7vw, 2.2rem);
         --alert: clamp(0.72rem, 3.8vw, 0.95rem);
-        --row-font: clamp(0.74rem, 3.8vw, 0.95rem);
-        --number-font: 0.56rem;
-        --number-col: 28px;
-        --label-col: 70px;
+        --row-font: clamp(0.68rem, 3.2vw, 0.88rem);
+        --number-font: 0.58rem;
+        --number-col: 30px;
+        --label-col: 92px;
       }
 
       .top {
@@ -201,11 +228,19 @@
         gap: 8px;
       }
 
+      .label {
+        white-space: normal;
+      }
+
       .disclaimer {
-        position: static;
         font-size: 0.64rem;
-        max-width: none;
-        padding: 0;
+        max-width: calc(100vw - (var(--hero-pad) * 2));
+        padding: 8px 0;
+      }
+
+      .bottom-space {
+        height: 32vh;
+        min-height: 180px;
       }
     }
   </style>
@@ -214,99 +249,113 @@
   <main class="hero">
     <div class="top">
       <div>
-        <div class="click">YOUR DATA COMPROMISED</div>
+        <div class="click">CLICK HERE-&gt;</div>
       </div>
     </div>
 
     <div class="blue-line">
-      >>> This started after you clicked<span class="cursor">_</span>
+      >>> ENTER E-MAIL:<span class="cursor">_</span>
     </div>
 
     <div class="main-alert" id="main-alert">DETECTING VISITOR...</div>
 
     <section class="board" id="data-board">
       <div class="row hot" data-key="ip">
-        <span class="num">#<br>1</span><span class="label">IP</span><span class="value">LOADING...</span>
+        <span class="num">#1</span><span class="label">IP</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="location">
-        <span class="num">#<br>2</span><span class="label">LOCATION</span><span class="value">LOADING...</span>
+        <span class="num">#2</span><span class="label">LOCATION</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="org">
-        <span class="num">#<br>3</span><span class="label">ISP / ORG</span><span class="value">LOADING...</span>
+        <span class="num">#3</span><span class="label">ISP / ORG</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="device">
-        <span class="num">#<br>4</span><span class="label">DEVICE</span><span class="value">LOADING...</span>
+        <span class="num">#4</span><span class="label">DEVICE</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="platform">
-        <span class="num">#<br>5</span><span class="label">PLATFORM</span><span class="value">LOADING...</span>
+        <span class="num">#5</span><span class="label">PLATFORM</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="screen">
-        <span class="num">#<br>6</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
+        <span class="num">#6</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="language">
-        <span class="num">#<br>7</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
+        <span class="num">#7</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
       </div>
       <div class="row green" data-key="timezone">
-        <span class="num">#<br>8</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
+        <span class="num">#8</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="cpu">
-        <span class="num">#<br>9</span><span class="label">CPU / RAM</span><span class="value">LOADING...</span>
+        <span class="num">#9</span><span class="label">CPU / RAM</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="touch">
-        <span class="num">#<br>10</span><span class="label">TOUCH</span><span class="value">LOADING...</span>
+        <span class="num">#10</span><span class="label">TOUCH</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="referrer">
-        <span class="num">#<br>11</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
+        <span class="num">#11</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="asn">
-        <span class="num">#<br>12</span><span class="label">ASN</span><span class="value">LOADING...</span>
+        <span class="num">#12</span><span class="label">ASN</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="hostname">
-        <span class="num">#<br>13</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
+        <span class="num">#13</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="currency">
-        <span class="num">#<br>14</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
+        <span class="num">#14</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="postal">
-        <span class="num">#<br>15</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
+        <span class="num">#15</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="coordinates">
-        <span class="num">#<br>16</span><span class="label">COORDS</span><span class="value">LOADING...</span>
+        <span class="num">#16</span><span class="label">COORDS</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="network">
-        <span class="num">#<br>17</span><span class="label">NETWORK ID</span><span class="value">LOADING...</span>
+        <span class="num">#17</span><span class="label">NETWORK ID</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="risk">
-        <span class="num">#<br>18</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
+        <span class="num">#18</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="fingerprint">
-        <span class="num">#<br>19</span><span class="label">FINGERPRINT</span><span class="value">LOADING...</span>
+        <span class="num">#19</span><span class="label">FINGERPRINT</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="behavior">
-        <span class="num">#<br>20</span><span class="label">BEHAVIOR</span><span class="value">LOADING...</span>
+        <span class="num">#20</span><span class="label">BEHAVIOR</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="persistence">
-        <span class="num">#<br>21</span><span class="label">PERSISTENCE</span><span class="value">LOADING...</span>
+        <span class="num">#21</span><span class="label">PERSISTENCE</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="adtech">
-        <span class="num">#<br>22</span><span class="label">AD-TECH</span><span class="value">LOADING...</span>
+        <span class="num">#22</span><span class="label">AD-TECH</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="sources">
-        <span class="num">#<br>23</span><span class="label">API SOURCES</span><span class="value">LOADING...</span>
+        <span class="num">#23</span><span class="label">API SOURCES</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="privacy">
-        <span class="num">#<br>24</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
+        <span class="num">#24</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
       </div>
-      <div class="row blue" data-key="realtime">
-        <span class="num">#<br>25</span><span class="label">LIVE INPUTS</span><span class="value">LOADING...</span>
+      <div class="row green" data-key="realtime">
+        <span class="num">#25</span><span class="label">LIVE INPUTS</span><span class="value">LOADING...</span>
       </div>
-      <div class="row hot" data-key="idle">
-        <span class="num">#<br>26</span><span class="label">IDLE DETECT</span><span class="value">LOADING...</span>
+      <div class="row green" data-key="idle">
+        <span class="num">#26</span><span class="label">IDLE DETECT</span><span class="value">LOADING...</span>
       </div>
-      <div class="row hot" data-key="profile">
-        <span class="num">#<br>27</span><span class="label">AD PROFILE</span><span class="value">LOADING...</span>
+      <div class="row green" data-key="battery">
+        <span class="num">#27</span><span class="label">BATTERY</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row green" data-key="mac">
+        <span class="num">#28</span><span class="label">MAC ADDR</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row green" data-key="profile">
+        <span class="num">#29</span><span class="label">AD PROFILE</span><span class="value">LOADING...</span>
       </div>
     </section>
+
+    <footer class="footer">
+      <div>MADE TO SCARE YOU BY</div>
+      <div>MIGUEL BASTIDA</div>
+      <div><a href="https://mbasval.com" target="_blank" rel="noreferrer">mbasval.com</a></div>
+    </footer>
+
+    <div class="bottom-space" aria-hidden="true"></div>
 
     <p class="disclaimer">
       THIS DEMO DOES NOT STORE, SELL, OR SHARE YOUR DATA. IT SHOWS HOW IP INTELLIGENCE APIS, BROWSER FINGERPRINTING, SESSION SIGNALS, AND AD-TECH SURFACES CAN EXPOSE IDENTITY, DEVICE TRAITS, AND TRACKABILITY THE MOMENT A PAGE LOADS.
@@ -369,6 +418,25 @@
       items.push(window.localStorage ? "LOCALSTORAGE" : "NO LOCALSTORAGE");
       items.push(window.sessionStorage ? "SESSIONSTORAGE" : "NO SESSIONSTORAGE");
       return items.join(" / ");
+    }
+
+    async function getBatterySummary() {
+      if (!navigator.getBattery) {
+        return "UNAVAILABLE / POWER STATE STILL INFERRED BY DEVICE CLASS";
+      }
+
+      try {
+        const battery = await navigator.getBattery();
+        const level = Math.round((battery.level || 0) * 100);
+        const charging = battery.charging ? "CHARGING" : "DISCHARGING";
+        return `${level}% / ${charging}`;
+      } catch (error) {
+        return "UNAVAILABLE / SENSOR BLOCKED";
+      }
+    }
+
+    function getMacAddressSummary() {
+      return "HIDDEN FROM BROWSER / THIS IS HOW THEY FIND YOU IN A NETWORK";
     }
 
     function summarizeBehavior() {
@@ -733,11 +801,12 @@
           day: "2-digit",
           hour: "2-digit",
           minute: "2-digit",
+          second: "2-digit",
           timeZoneName: "short"
         }).toUpperCase();
 
         document.getElementById("main-alert").innerHTML = `
-          <span class="warning-copy">NOW IMAGINE: EVERY WEBSITE DOES THIS. COMPANIES SELL THIS DATA AND MORE. FOR YEARS. WITHOUT YOU SEEING IT.</span>
+          <span class="warning-copy">NOW IMAGINE: 300 WEBSITES. SHARING THIS DATA. FOR YEARS. WITHOUT YOU SEEING IT.</span>
           <span class="live-time" id="live-time">${timestamp}</span>
         `;
 
@@ -767,7 +836,9 @@
         setRow("privacy", "NOT STORED. SHOWN LOCALLY.", 1200);
         setRow("realtime", getRealtimeInputsMessage(), 1250);
         setRow("idle", getIdleMessage(), 1300);
-        setRow("profile", buildProfile(data), 1350);
+        setRow("battery", await getBatterySummary(), 1350);
+        setRow("mac", getMacAddressSummary(), 1400);
+        setRow("profile", buildProfile(data), 1450);
         updateClock();
       } catch (error) {
         document.getElementById("main-alert").textContent = "ERROR DETECTING VISITOR";
