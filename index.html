@@ -12,16 +12,16 @@
       --blue: #39aaff;
       --red: #ff1a1a;
       --gray: #8b9198;
-      --green: #6dff57;
-      --dim: rgba(255, 255, 255, 0.12);
-      --hero-pad: clamp(12px, 1.5vw, 26px);
+      --green: #63ff5b;
+      --hero-pad: clamp(14px, 1.6vw, 28px);
       --hero-gap: clamp(8px, 1vh, 16px);
-      --row-font: clamp(0.8rem, 1.15vw, 1.5rem);
-      --headline: clamp(2.2rem, 8vw, 6.6rem);
-      --subheadline: clamp(1.4rem, 3vw, 3.8rem);
-      --alert: clamp(1.2rem, 2.2vw, 2.6rem);
-      --number-col: 54px;
-      --label-col: minmax(118px, 180px);
+      --headline: clamp(2.8rem, 8vw, 6.8rem);
+      --subheadline: clamp(1.8rem, 5vw, 4.4rem);
+      --alert: clamp(1.2rem, 2.2vw, 2.7rem);
+      --row-font: clamp(1.15rem, 2.2vw, 4rem);
+      --number-font: clamp(0.9rem, 1.25vw, 1.5rem);
+      --number-col: 76px;
+      --label-col: minmax(160px, 240px);
     }
 
     * {
@@ -39,7 +39,8 @@
     body {
       color: var(--gray);
       font-family: "Courier New", monospace;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     .hero {
@@ -54,13 +55,12 @@
         linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
         #000;
       background-size: 100% 28px, 28px 100%, auto;
-      overflow: hidden;
     }
 
     .topline {
       display: flex;
       align-items: flex-start;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: 20px;
     }
 
@@ -70,14 +70,6 @@
       line-height: 0.82;
       letter-spacing: 0.04em;
       font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    .shop {
-      color: var(--gray);
-      font-size: clamp(1.5rem, 5vw, 4.4rem);
-      line-height: 0.9;
-      text-align: right;
       text-transform: uppercase;
     }
 
@@ -111,16 +103,15 @@
       display: block;
       margin-top: 8px;
       color: var(--green);
-      text-shadow: 0 0 8px rgba(109, 255, 87, 0.35);
+      text-shadow: 0 0 10px rgba(99, 255, 91, 0.45);
     }
 
     .board {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2px;
+      gap: 4px;
       align-content: start;
-      min-height: 0;
-      padding-bottom: 76px;
+      padding-bottom: 60px;
     }
 
     .row {
@@ -129,9 +120,9 @@
       gap: 14px;
       align-items: start;
       font-size: var(--row-font);
-      line-height: 0.98;
+      line-height: 0.88;
       color: var(--gray);
-      opacity: 0.44;
+      opacity: 0.42;
       text-transform: uppercase;
     }
 
@@ -153,12 +144,19 @@
 
     .num {
       color: inherit;
+      font-size: var(--number-font);
+      line-height: 0.95;
       white-space: pre-line;
+      padding-top: 4px;
     }
 
     .label,
     .value {
       color: inherit;
+    }
+
+    .label {
+      opacity: 0.9;
     }
 
     .value {
@@ -184,37 +182,27 @@
       46%, 100% { opacity: 0; }
     }
 
-    @media (max-width: 980px), (max-height: 820px) {
+    @media (max-width: 1100px) {
       :root {
-        --number-col: 42px;
-        --label-col: minmax(88px, 122px);
-        --row-font: clamp(0.72rem, 1vw, 1rem);
+        --row-font: clamp(0.95rem, 2vw, 2.2rem);
+        --number-col: 64px;
+        --label-col: minmax(120px, 180px);
       }
     }
 
     @media (max-width: 720px) {
-      body {
-        overflow-y: auto;
-      }
-
-      .hero {
-        overflow: visible;
-      }
-
-      .topline {
-        display: block;
-      }
-
-      .shop {
-        text-align: left;
-        margin-top: 10px;
+      :root {
+        --headline: clamp(2.2rem, 12vw, 4.2rem);
+        --subheadline: clamp(1.2rem, 7vw, 2.4rem);
+        --alert: clamp(1rem, 4.8vw, 1.4rem);
+        --row-font: clamp(0.9rem, 4.6vw, 1.15rem);
+        --number-font: 0.8rem;
+        --number-col: 42px;
+        --label-col: 92px;
       }
 
       .row {
-        grid-template-columns: 34px 90px minmax(0, 1fr);
         gap: 8px;
-        font-size: 0.72rem;
-        line-height: 1.04;
       }
 
       .disclaimer {
@@ -228,8 +216,7 @@
 <body>
   <main class="hero">
     <div class="topline">
-      <div class="click">CLICK HERE-&gt;</div>
-      <div class="shop">SHOP-&gt; !!!</div>
+      <div class="click">CLICK HERE↗</div>
     </div>
 
     <div class="blue-line">
@@ -815,3 +802,5 @@
 </body>
 </html>
 ```
+
+I removed the `SHOP-> !!!`, re-enabled vertical scrolling, and made the info rows much larger and more dominant so the values carry the visual weight instead of those tiny boxed rows.
