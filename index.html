@@ -173,7 +173,7 @@
       font-size: clamp(0.64rem, 0.82vw, 0.8rem);
       line-height: 1.28;
       background: rgba(235, 235, 235, 0.8);
-      padding: 8px 0;
+      padding: 8px 10px;
       text-transform: uppercase;
     }
 
@@ -236,7 +236,7 @@
       .disclaimer {
         font-size: 0.64rem;
         max-width: calc(100vw - (var(--hero-pad) * 2));
-        padding: 8px 0;
+        padding: 8px 10px;
       }
 
       .bottom-space {
@@ -273,80 +273,83 @@
       <div class="row blue" data-key="device">
         <span class="num">#4</span><span class="label">DEVICE</span><span class="value">LOADING...</span>
       </div>
+      <div class="row" data-key="connection">
+        <span class="num">#5</span><span class="label">NETWORK</span><span class="value">LOADING...</span>
+      </div>
       <div class="row" data-key="battery">
-        <span class="num">#5</span><span class="label">BATTERY</span><span class="value">LOADING...</span>
+        <span class="num">#6</span><span class="label">BATTERY</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="platform">
-        <span class="num">#6</span><span class="label">PLATFORM</span><span class="value">LOADING...</span>
+        <span class="num">#7</span><span class="label">PLATFORM</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="screen">
-        <span class="num">#7</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
+        <span class="num">#8</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="language">
-        <span class="num">#8</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
+        <span class="num">#9</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="timezone">
-        <span class="num">#9</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
+        <span class="num">#10</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
       </div>
       <div class="row green" data-key="realtime">
-        <span class="num">#10</span><span class="label">LIVE INPUTS</span><span class="value">LOADING...</span>
+        <span class="num">#11</span><span class="label">LIVE INPUTS</span><span class="value">LOADING...</span>
       </div>
       <div class="row green" data-key="idle">
-        <span class="num">#11</span><span class="label">IDLE DETECT</span><span class="value">LOADING...</span>
+        <span class="num">#12</span><span class="label">IDLE DETECT</span><span class="value">LOADING...</span>
       </div>
       <div class="row green" data-key="profile">
-        <span class="num">#12</span><span class="label">AD PROFILE</span><span class="value">LOADING...</span>
+        <span class="num">#13</span><span class="label">AD PROFILE</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="cpu">
-        <span class="num">#13</span><span class="label">CPU / RAM</span><span class="value">LOADING...</span>
+        <span class="num">#14</span><span class="label">CPU / RAM</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="touch">
-        <span class="num">#14</span><span class="label">TOUCH</span><span class="value">LOADING...</span>
+        <span class="num">#15</span><span class="label">TOUCH</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="referrer">
-        <span class="num">#15</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
+        <span class="num">#16</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="asn">
-        <span class="num">#16</span><span class="label">ASN</span><span class="value">LOADING...</span>
+        <span class="num">#17</span><span class="label">ASN</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="hostname">
-        <span class="num">#17</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
+        <span class="num">#18</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="currency">
-        <span class="num">#18</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
+        <span class="num">#19</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="postal">
-        <span class="num">#19</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
+        <span class="num">#20</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="coordinates">
-        <span class="num">#20</span><span class="label">COORDS</span><span class="value">LOADING...</span>
+        <span class="num">#21</span><span class="label">COORDS</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="geometa">
-        <span class="num">#21</span><span class="label">GEO META</span><span class="value">LOADING...</span>
+        <span class="num">#22</span><span class="label">GEO META</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="network">
-        <span class="num">#22</span><span class="label">NETWORK ID</span><span class="value">LOADING...</span>
+        <span class="num">#23</span><span class="label">NETWORK ID</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="risk">
-        <span class="num">#23</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
+        <span class="num">#24</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="fingerprint">
-        <span class="num">#24</span><span class="label">FINGERPRINT</span><span class="value">LOADING...</span>
+        <span class="num">#25</span><span class="label">FINGERPRINT</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="behavior">
-        <span class="num">#25</span><span class="label">BEHAVIOR</span><span class="value">LOADING...</span>
+        <span class="num">#26</span><span class="label">BEHAVIOR</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="persistence">
-        <span class="num">#26</span><span class="label">PERSISTENCE</span><span class="value">LOADING...</span>
+        <span class="num">#27</span><span class="label">PERSISTENCE</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="adtech">
-        <span class="num">#27</span><span class="label">AD-TECH</span><span class="value">LOADING...</span>
+        <span class="num">#28</span><span class="label">AD-TECH</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="sources">
-        <span class="num">#28</span><span class="label">API SOURCES</span><span class="value">LOADING...</span>
+        <span class="num">#29</span><span class="label">API SOURCES</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="privacy">
-        <span class="num">#29</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
+        <span class="num">#30</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
       </div>
     </section>
 
@@ -434,6 +437,20 @@
       } catch (error) {
         return "UNAVAILABLE / SENSOR BLOCKED";
       }
+    }
+
+    function getConnectionSummary() {
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (!connection) {
+        return "TYPE:UNKNOWN / DOWNLINK:UNKNOWN / RTT:UNKNOWN / EFFECTIVE:UNKNOWN";
+      }
+
+      const type = (connection.type || "UNKNOWN").toString().toUpperCase();
+      const downlink = connection.downlink !== undefined ? `${connection.downlink}MBPS` : "UNKNOWN";
+      const rtt = connection.rtt !== undefined ? `${connection.rtt}MS` : "UNKNOWN";
+      const effectiveType = (connection.effectiveType || "UNKNOWN").toString().toUpperCase();
+
+      return `TYPE:${type} / DOWNLINK:${downlink} / RTT:${rtt} / EFFECTIVE:${effectiveType}`;
     }
 
     function summarizeBehavior() {
@@ -799,7 +816,7 @@
     async function fetchAndDisplay() {
       try {
         const data = await fetchAllData();
-      const timestamp = new Date().toLocaleString("en-US", {
+        const timestamp = new Date().toLocaleString("en-US", {
           timeZone: data.timezone !== "UNKNOWN" ? data.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone,
           weekday: "short",
           month: "short",
@@ -818,31 +835,32 @@
         setRow("location", `${data.city}, ${data.region}, ${data.country} / ${estimateDistanceFromCenter(data.city, data.coordinates)}`, 100);
         setRow("org", data.org, 150);
         setRow("device", getBrowserInfo(), 200);
-        setRow("battery", await getBatterySummary(), 250);
-        setRow("platform", (navigator.platform || "UNKNOWN").toUpperCase(), 300);
-        setRow("screen", `${window.screen.width} x ${window.screen.height} / DPR ${window.devicePixelRatio || 1}`, 350);
-        setRow("language", navigator.language.toUpperCase(), 400);
-        setRow("timezone", data.timezone.toUpperCase(), 450);
-        setRow("cpu", `${navigator.hardwareConcurrency || "?"} CORES / ${navigator.deviceMemory || "?"}GB`, 500);
-        setRow("touch", `${navigator.maxTouchPoints || 0} POINTS`, 550);
-        setRow("referrer", document.referrer || "DIRECT / HIDDEN", 600);
-        setRow("asn", data.asn, 650);
-        setRow("hostname", data.hostname, 700);
-        setRow("currency", data.currency, 750);
-        setRow("postal", data.postal, 800);
-        setRow("coordinates", data.coordinates, 850);
-        setRow("geometa", data.geoMeta, 900);
-        setRow("network", data.network, 950);
-        setRow("risk", data.risk, 1000);
-        setRow("fingerprint", buildFingerprint(), 1050);
-        setRow("behavior", summarizeBehavior(), 1100);
-        setRow("persistence", summarizeStorage(), 1150);
-        setRow("adtech", summarizeAdTech(), 1200);
-        setRow("sources", data.sources || "NO PUBLIC SOURCES RESPONDED", 1250);
-        setRow("privacy", "NOT STORED. SHOWN LOCALLY.", 1300);
-        setRow("realtime", getRealtimeInputsMessage(), 1350);
-        setRow("idle", getIdleMessage(), 1400);
-        setRow("profile", buildProfile(data), 1450);
+        setRow("connection", getConnectionSummary(), 250);
+        setRow("battery", await getBatterySummary(), 300);
+        setRow("platform", (navigator.platform || "UNKNOWN").toUpperCase(), 350);
+        setRow("screen", `${window.screen.width} x ${window.screen.height} / DPR ${window.devicePixelRatio || 1}`, 400);
+        setRow("language", navigator.language.toUpperCase(), 450);
+        setRow("timezone", data.timezone.toUpperCase(), 500);
+        setRow("realtime", getRealtimeInputsMessage(), 550);
+        setRow("idle", getIdleMessage(), 600);
+        setRow("profile", buildProfile(data), 650);
+        setRow("cpu", `${navigator.hardwareConcurrency || "?"} CORES / ${navigator.deviceMemory || "?"}GB`, 700);
+        setRow("touch", `${navigator.maxTouchPoints || 0} POINTS`, 750);
+        setRow("referrer", document.referrer || "DIRECT / HIDDEN", 800);
+        setRow("asn", data.asn, 850);
+        setRow("hostname", data.hostname, 900);
+        setRow("currency", data.currency, 950);
+        setRow("postal", data.postal, 1000);
+        setRow("coordinates", data.coordinates, 1050);
+        setRow("geometa", data.geoMeta, 1100);
+        setRow("network", data.network, 1150);
+        setRow("risk", data.risk, 1200);
+        setRow("fingerprint", buildFingerprint(), 1250);
+        setRow("behavior", summarizeBehavior(), 1300);
+        setRow("persistence", summarizeStorage(), 1350);
+        setRow("adtech", summarizeAdTech(), 1400);
+        setRow("sources", data.sources || "NO PUBLIC SOURCES RESPONDED", 1450);
+        setRow("privacy", "NOT STORED. SHOWN LOCALLY.", 1500);
         updateClock();
       } catch (error) {
         document.getElementById("main-alert").textContent = "ERROR DETECTING VISITOR";
