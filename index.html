@@ -20,7 +20,7 @@
       --row-font: clamp(1.15rem, 2.2vw, 4rem);
       --number-font: clamp(0.9rem, 1.25vw, 1.5rem);
       --number-col: 76px;
-      --label-col: minmax(160px, 240px);
+      --label-col: minmax(180px, 260px);
     }
 
     * {
@@ -88,8 +88,8 @@
     }
 
     .main-alert {
-      font-size: var(--alert);
-      line-height: 0.95;
+      font-size: var(--row-font);
+      line-height: 1;
       font-weight: bold;
       overflow-wrap: anywhere;
       text-transform: uppercase;
@@ -104,6 +104,8 @@
       display: block;
       margin-top: 8px;
       color: var(--green);
+      font-size: var(--row-font);
+      line-height: 1;
     }
 
     .board {
@@ -117,7 +119,7 @@
     .row {
       display: grid;
       grid-template-columns: var(--number-col) var(--label-col) minmax(0, 1fr);
-      gap: 14px;
+      gap: 22px;
       align-items: baseline;
       font-size: var(--row-font);
       line-height: 1;
@@ -130,20 +132,8 @@
       opacity: 1;
     }
 
-    .row.hot {
-      color: var(--red);
-    }
-
-    .row.blue {
-      color: var(--blue);
-    }
-
-    .row.green {
-      color: var(--green);
-    }
-
     .num {
-      color: inherit;
+      color: var(--gray);
       font-size: var(--number-font);
       line-height: 1;
       white-space: pre-line;
@@ -151,11 +141,14 @@
     }
 
     .label {
+      color: var(--gray);
       opacity: 0.9;
       line-height: 1;
+      white-space: nowrap;
     }
 
     .value {
+      color: var(--gray);
       overflow-wrap: anywhere;
       line-height: 1;
     }
@@ -183,7 +176,7 @@
       :root {
         --row-font: clamp(0.95rem, 2vw, 2.2rem);
         --number-col: 64px;
-        --label-col: minmax(120px, 180px);
+        --label-col: minmax(130px, 190px);
       }
     }
 
@@ -195,7 +188,7 @@
         --row-font: clamp(0.9rem, 4.6vw, 1.15rem);
         --number-font: 0.8rem;
         --number-col: 42px;
-        --label-col: 92px;
+        --label-col: 102px;
       }
 
       .top {
@@ -203,7 +196,7 @@
       }
 
       .row {
-        gap: 8px;
+        gap: 12px;
       }
 
       .disclaimer {
@@ -386,17 +379,20 @@
     }
 
     function estimateDistanceFromCenter(city, coords) {
-      if (!city || city === "UNKNOWN" || !coords || coords === "UNKNOWN") {
-        return "CITY CENTER DISTANCE ESTIMATE UNAVAILABLE";
+      let latRaw = 19.4326;
+      let lonRaw = -99.1332;
+
+      if (coords && coords.includes(",")) {
+        const parts = coords.split(",");
+        const parsedLat = Number.parseFloat(parts[0].trim());
+        const parsedLon = Number.parseFloat(parts[1].trim());
+        if (!Number.isNaN(parsedLat)) latRaw = parsedLat;
+        if (!Number.isNaN(parsedLon)) lonRaw = parsedLon;
       }
 
-      const [latRaw, lonRaw] = coords.split(",").map((value) => Number.parseFloat(value.trim()));
-      if (Number.isNaN(latRaw) || Number.isNaN(lonRaw)) {
-        return "CITY CENTER DISTANCE ESTIMATE UNAVAILABLE";
-      }
-
-      const pseudoDistance = Math.max(2, Math.min(18, Math.round(((Math.abs(latRaw % 1) + Math.abs(lonRaw % 1)) * 12))));
-      return `${pseudoDistance} KM FROM ${city.toUpperCase()} CENTER`;
+      const pseudoDistance = Math.max(2, Math.min(18, Math.round((Math.abs(latRaw % 1) + Math.abs(lonRaw % 1)) * 12)));
+      const safeCity = city && city !== "UNKNOWN" ? city.toUpperCase() : "CITY";
+      return `${pseudoDistance} KM FROM ${safeCity} CENTER`;
     }
 
     function updateActivity() {
@@ -667,7 +663,7 @@
           payloads.ipapiCom?.zipCode,
           payloads.bigdatacloud?.postcode
         ),
-        coordinates: lat !== "UNKNOWN" && lon !== "UNKNOWN" ? `${lat}, ${lon}` : "UNKNOWN",
+        coordinates: lat !== "UNKNOWN" && lon !== "UNKNOWN" ? `${lat}, ${lon}` : "19.4326, -99.1332",
         network: normalizeString(
           payloads.ipregistry?.company?.name,
           payloads.vpnapi?.location?.country,
