@@ -17,8 +17,7 @@
       --hero-gap: clamp(8px, 1vh, 16px);
       --board-gap: clamp(4px, 0.5vh, 8px);
       --row-font: clamp(0.72rem, 0.95vw, 1rem);
-      --headline: clamp(1.9rem, 5vw, 5.3rem);
-      --subheadline: clamp(1.6rem, 4.4vw, 4.6rem);
+      --headline: clamp(2rem, 6vw, 6rem);
       --alert: clamp(1rem, 2vw, 2rem);
     }
 
@@ -45,7 +44,7 @@
       min-height: 100dvh;
       padding: var(--hero-pad);
       display: grid;
-      grid-template-rows: auto auto auto 1fr auto;
+      grid-template-rows: auto auto 1fr auto;
       gap: var(--hero-gap);
       background:
         linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
@@ -58,16 +57,9 @@
 
     .top {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: 1fr;
       align-items: start;
       gap: 18px;
-    }
-
-    .counter {
-      color: var(--yellow);
-      font-size: clamp(0.85rem, 1.2vw, 1.2rem);
-      line-height: 1;
-      margin-bottom: 8px;
     }
 
     .click {
@@ -76,15 +68,7 @@
       line-height: 0.82;
       letter-spacing: 0.04em;
       font-weight: bold;
-      max-width: 8ch;
-    }
-
-    .privacy {
-      color: var(--gray);
-      font-size: var(--subheadline);
-      line-height: 0.82;
-      text-align: right;
-      font-weight: bold;
+      max-width: 10ch;
     }
 
     .blue-line {
@@ -114,6 +98,7 @@
       gap: var(--board-gap) 10px;
       align-content: start;
       min-height: 0;
+      padding-bottom: 74px;
     }
 
     .row {
@@ -148,11 +133,16 @@
     }
 
     .disclaimer {
+      position: fixed;
+      left: var(--hero-pad);
+      bottom: 18px;
       margin: 0;
-      max-width: 90ch;
+      max-width: min(92ch, calc(100vw - (var(--hero-pad) * 2)));
       color: var(--gray);
       font-size: clamp(0.64rem, 0.82vw, 0.8rem);
       line-height: 1.28;
+      background: rgba(0, 0, 0, 0.72);
+      padding: 8px 0;
     }
 
     @keyframes blink {
@@ -179,10 +169,6 @@
         grid-template-columns: 1fr;
       }
 
-      .privacy {
-        text-align: left;
-      }
-
       .row {
         grid-template-columns: 30px minmax(74px, 92px) minmax(0, 1fr);
         font-size: 0.7rem;
@@ -190,7 +176,10 @@
       }
 
       .disclaimer {
+        position: static;
         font-size: 0.64rem;
+        max-width: none;
+        padding: 0;
       }
     }
   </style>
@@ -199,13 +188,7 @@
   <main class="hero">
     <div class="top">
       <div>
-        <div class="counter">#<br><span id="visitor-number">1</span></div>
-        <div class="click">CLICK HERE-&gt;</div>
-      </div>
-
-      <div class="privacy">
-        PRIVACY-&gt;<br>
-        <span style="color: var(--yellow);">!!!</span>
+        <div class="click">CLICK TO REVEAL</div>
       </div>
     </div>
 
@@ -228,49 +211,70 @@
       <div class="row blue" data-key="device">
         <span>#4</span><span class="label">DEVICE</span><span class="value">LOADING...</span>
       </div>
-      <div class="row" data-key="screen">
-        <span>#5</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
+      <div class="row blue" data-key="platform">
+        <span>#5</span><span class="label">PLATFORM</span><span class="value">LOADING...</span>
       </div>
-      <div class="row" data-key="language">
-        <span>#6</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
+      <div class="row blue" data-key="screen">
+        <span>#6</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
       </div>
-      <div class="row" data-key="timezone">
-        <span>#7</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
+      <div class="row blue" data-key="language">
+        <span>#7</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="timezone">
+        <span>#8</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="cpu">
+        <span>#9</span><span class="label">CPU / RAM</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="touch">
+        <span>#10</span><span class="label">TOUCH</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="referrer">
-        <span>#8</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
+        <span>#11</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="asn">
-        <span>#9</span><span class="label">ASN</span><span class="value">LOADING...</span>
+        <span>#12</span><span class="label">ASN</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="hostname">
-        <span>#10</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
+        <span>#13</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="currency">
-        <span>#11</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
+        <span>#14</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="postal">
-        <span>#12</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
+        <span>#15</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="coordinates">
-        <span>#13</span><span class="label">COORDS</span><span class="value">LOADING...</span>
+        <span>#16</span><span class="label">COORDS</span><span class="value">LOADING...</span>
       </div>
-      <div class="row" data-key="network">
-        <span>#14</span><span class="label">NETWORK</span><span class="value">LOADING...</span>
+      <div class="row hot" data-key="network">
+        <span>#17</span><span class="label">NETWORK ID</span><span class="value">LOADING...</span>
       </div>
-      <div class="row" data-key="risk">
-        <span>#15</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
+      <div class="row hot" data-key="risk">
+        <span>#18</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="fingerprint">
+        <span>#19</span><span class="label">FINGERPRINT</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="behavior">
+        <span>#20</span><span class="label">BEHAVIOR</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="persistence">
+        <span>#21</span><span class="label">PERSISTENCE</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row blue" data-key="adtech">
+        <span>#22</span><span class="label">AD-TECH</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="sources">
-        <span>#16</span><span class="label">SOURCES</span><span class="value">LOADING...</span>
+        <span>#23</span><span class="label">API SOURCES</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="privacy">
-        <span>#17</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
+        <span>#24</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
       </div>
     </section>
 
     <p class="disclaimer">
-      This demo queries multiple public IP intelligence endpoints directly in the browser. Some sources require API keys, so unavailable services are skipped and only successful responses are reflected on screen.
+      This demo does not store, sell, or share your data. It shows how IP intelligence APIs, browser fingerprinting, session signals, and ad-tech surfaces can expose identity, device traits, and trackability the moment a page loads.
     </p>
   </main>
 
@@ -311,6 +315,46 @@
 
     function normalizeNumber(...values) {
       return values.find((value) => value !== undefined && value !== null && value !== "") ?? "UNKNOWN";
+    }
+
+    function summarizeStorage() {
+      const items = [];
+      items.push(navigator.cookieEnabled ? "COOKIES ON" : "COOKIES OFF");
+      items.push(window.localStorage ? "LOCALSTORAGE" : "NO LOCALSTORAGE");
+      items.push(window.sessionStorage ? "SESSIONSTORAGE" : "NO SESSIONSTORAGE");
+      return items.join(" / ");
+    }
+
+    function summarizeBehavior() {
+      const items = [];
+      items.push(document.visibilityState ? `TAB:${document.visibilityState.toUpperCase()}` : "TAB:UNKNOWN");
+      items.push(navigator.doNotTrack === "1" ? "DNT ON" : "DNT OFF");
+      items.push(navigator.onLine ? "ONLINE" : "OFFLINE");
+      items.push(`HISTORY:${window.history.length}`);
+      return items.join(" / ");
+    }
+
+    function summarizeAdTech() {
+      const items = [];
+      items.push("THIRD-PARTY IP LOOKUPS");
+      items.push(document.referrer ? "REFERRER PASS-THROUGH" : "DIRECT ENTRY");
+      items.push(navigator.globalPrivacyControl ? "GPC ON" : "GPC OFF/NA");
+      items.push(navigator.cookieEnabled ? "COOKIE TARGETABLE" : "COOKIE LIMITED");
+      return items.join(" / ");
+    }
+
+    function buildFingerprint() {
+      const parts = [
+        navigator.userAgent,
+        navigator.language,
+        `${window.screen.width}x${window.screen.height}`,
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
+        navigator.hardwareConcurrency || "NA",
+        navigator.deviceMemory || "NA",
+        navigator.platform || "NA"
+      ];
+
+      return parts.join(" | ").toUpperCase();
     }
 
     async function getJson(url) {
@@ -415,7 +459,6 @@
           payloads.ipwhois?.timezone?.id,
           payloads.freeipapi?.timeZone,
           payloads.ipapiCom?.timezone,
-          payloads.bigdatacloud?.localityInfo?.administrative?.[0]?.isoName,
           Intl.DateTimeFormat().resolvedOptions().timeZone
         ),
         asn: normalizeString(
@@ -525,19 +568,26 @@
         setRow("location", `${data.city}, ${data.region}, ${data.country}`, 100);
         setRow("org", data.org, 150);
         setRow("device", getBrowserInfo(), 200);
-        setRow("screen", `${window.screen.width} x ${window.screen.height}`, 250);
-        setRow("language", navigator.language.toUpperCase(), 300);
-        setRow("timezone", data.timezone.toUpperCase(), 350);
-        setRow("referrer", document.referrer || "DIRECT / HIDDEN", 400);
-        setRow("asn", data.asn, 450);
-        setRow("hostname", data.hostname, 500);
-        setRow("currency", data.currency, 550);
-        setRow("postal", data.postal, 600);
-        setRow("coordinates", data.coordinates, 650);
-        setRow("network", data.network, 700);
-        setRow("risk", data.risk, 750);
-        setRow("sources", data.sources || "NO PUBLIC SOURCES RESPONDED", 800);
-        setRow("privacy", "NOT STORED. SHOWN LOCALLY.", 850);
+        setRow("platform", (navigator.platform || "UNKNOWN").toUpperCase(), 250);
+        setRow("screen", `${window.screen.width} x ${window.screen.height} / DPR ${window.devicePixelRatio || 1}`, 300);
+        setRow("language", navigator.language.toUpperCase(), 350);
+        setRow("timezone", data.timezone.toUpperCase(), 400);
+        setRow("cpu", `${navigator.hardwareConcurrency || "?"} CORES / ${navigator.deviceMemory || "?"}GB`, 450);
+        setRow("touch", `${navigator.maxTouchPoints || 0} POINTS`, 500);
+        setRow("referrer", document.referrer || "DIRECT / HIDDEN", 550);
+        setRow("asn", data.asn, 600);
+        setRow("hostname", data.hostname, 650);
+        setRow("currency", data.currency, 700);
+        setRow("postal", data.postal, 750);
+        setRow("coordinates", data.coordinates, 800);
+        setRow("network", data.network, 850);
+        setRow("risk", data.risk, 900);
+        setRow("fingerprint", buildFingerprint(), 950);
+        setRow("behavior", summarizeBehavior(), 1000);
+        setRow("persistence", summarizeStorage(), 1050);
+        setRow("adtech", summarizeAdTech(), 1100);
+        setRow("sources", data.sources || "NO PUBLIC SOURCES RESPONDED", 1150);
+        setRow("privacy", "NOT STORED. SHOWN LOCALLY.", 1200);
       } catch (error) {
         document.getElementById("main-alert").textContent = "ERROR DETECTING VISITOR";
       }
