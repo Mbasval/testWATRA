@@ -12,15 +12,14 @@
       --blue: #39aaff;
       --red: #ff1018;
       --gray: #8d949c;
-      --dim: #3b4148;
-      --line: rgba(255, 255, 255, 0.06);
-      --hero-pad: clamp(14px, 2vw, 28px);
-      --hero-gap: clamp(10px, 1.5vh, 20px);
-      --board-gap: clamp(2px, 0.45vh, 8px);
-      --row-font: clamp(0.82rem, 1.15vw, 1.45rem);
-      --headline: clamp(2rem, 4.8vw, 5.8rem);
-      --subheadline: clamp(1.8rem, 4.4vw, 5rem);
-      --alert: clamp(1.4rem, 3vw, 3.2rem);
+      --line: rgba(255, 255, 255, 0.08);
+      --hero-pad: clamp(12px, 1.5vw, 24px);
+      --hero-gap: clamp(8px, 1vh, 16px);
+      --board-gap: clamp(4px, 0.5vh, 8px);
+      --row-font: clamp(0.72rem, 0.95vw, 1rem);
+      --headline: clamp(1.9rem, 5vw, 5.3rem);
+      --subheadline: clamp(1.6rem, 4.4vw, 4.6rem);
+      --alert: clamp(1rem, 2vw, 2rem);
     }
 
     * {
@@ -48,29 +47,27 @@
       display: grid;
       grid-template-rows: auto auto auto 1fr auto;
       gap: var(--hero-gap);
-      position: relative;
       background:
         linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
-        radial-gradient(circle at top right, rgba(57, 170, 255, 0.1), transparent 30%),
+        radial-gradient(circle at top right, rgba(57, 170, 255, 0.12), transparent 30%),
         #000;
       background-size: 100% 28px, 28px 100%, auto, auto;
       overflow: hidden;
-      isolation: isolate;
     }
 
     .top {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: start;
-      gap: clamp(16px, 3vw, 48px);
+      gap: 18px;
     }
 
     .counter {
       color: var(--yellow);
-      font-size: clamp(0.95rem, 1.45vw, 1.6rem);
+      font-size: clamp(0.85rem, 1.2vw, 1.2rem);
       line-height: 1;
-      margin-bottom: clamp(8px, 1vh, 16px);
+      margin-bottom: 8px;
     }
 
     .click {
@@ -92,7 +89,7 @@
 
     .blue-line {
       color: var(--blue);
-      font-size: clamp(1.5rem, 3vw, 3.9rem);
+      font-size: clamp(1.3rem, 2.4vw, 3rem);
       line-height: 0.9;
       font-weight: bold;
       letter-spacing: 0.04em;
@@ -106,7 +103,7 @@
     .main-alert {
       color: var(--red);
       font-size: var(--alert);
-      line-height: 0.94;
+      line-height: 0.95;
       font-weight: bold;
       overflow-wrap: anywhere;
     }
@@ -114,22 +111,21 @@
     .board {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--board-gap) clamp(10px, 1.25vw, 18px);
+      gap: var(--board-gap) 10px;
       align-content: start;
       min-height: 0;
     }
 
     .row {
       display: grid;
-      grid-template-columns: 48px minmax(90px, 140px) minmax(0, 1fr);
+      grid-template-columns: 34px minmax(84px, 112px) minmax(0, 1fr);
+      gap: 8px;
       align-items: start;
-      gap: clamp(6px, 0.8vw, 12px);
-      min-height: 0;
-      padding: clamp(5px, 0.6vw, 9px) clamp(6px, 0.8vw, 10px);
+      padding: 6px 7px;
       font-size: var(--row-font);
-      line-height: 1;
-      opacity: 0.42;
+      line-height: 1.06;
       color: var(--gray);
+      opacity: 0.42;
       text-transform: uppercase;
       border: 1px solid var(--line);
       background: var(--panel);
@@ -147,23 +143,16 @@
       color: var(--blue);
     }
 
-    .label,
-    .value {
-      color: inherit;
-    }
-
     .value {
       overflow-wrap: anywhere;
     }
 
     .disclaimer {
-      max-width: 88ch;
-      color: var(--gray);
-      font-size: clamp(0.72rem, 0.95vw, 0.92rem);
-      line-height: 1.3;
-      background: rgba(0, 0, 0, 0.72);
-      padding-top: 2px;
       margin: 0;
+      max-width: 90ch;
+      color: var(--gray);
+      font-size: clamp(0.64rem, 0.82vw, 0.8rem);
+      line-height: 1.28;
     }
 
     @keyframes blink {
@@ -171,68 +160,37 @@
       46%, 100% { opacity: 0; }
     }
 
-    @media (max-width: 980px), (max-height: 760px) {
-      :root {
-        --hero-pad: 14px;
-        --hero-gap: 10px;
-        --board-gap: 4px;
-        --row-font: clamp(0.72rem, 1.5vw, 1rem);
-        --headline: clamp(1.7rem, 7vw, 3.5rem);
-        --subheadline: clamp(1.6rem, 6vw, 3.2rem);
-        --alert: clamp(1.15rem, 3.8vw, 2rem);
-      }
-
+    @media (max-width: 1100px), (max-height: 820px) {
       .board {
         grid-template-columns: 1fr;
       }
-
-      .row {
-        grid-template-columns: 40px minmax(86px, 110px) minmax(0, 1fr);
-      }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 720px) {
       body {
         overflow-y: auto;
       }
 
       .hero {
-        min-height: 100vh;
-        min-height: 100dvh;
+        overflow: visible;
       }
 
       .top {
         grid-template-columns: 1fr;
-        gap: 12px;
       }
 
       .privacy {
         text-align: left;
       }
 
-      .blue-line {
-        font-size: clamp(1.2rem, 6vw, 2rem);
-      }
-
-      .main-alert {
-        font-size: clamp(1rem, 4.8vw, 1.45rem);
-      }
-
-      .board {
-        gap: 4px;
-      }
-
       .row {
-        grid-template-columns: 36px minmax(82px, 96px) minmax(0, 1fr);
-        gap: 8px;
-        padding: 6px;
-        font-size: 0.76rem;
-        line-height: 1.05;
+        grid-template-columns: 30px minmax(74px, 92px) minmax(0, 1fr);
+        font-size: 0.7rem;
+        padding: 5px 6px;
       }
 
       .disclaimer {
-        font-size: 0.7rem;
-        line-height: 1.25;
+        font-size: 0.64rem;
       }
     }
   </style>
@@ -241,12 +199,12 @@
   <main class="hero">
     <div class="top">
       <div>
-        <div class="counter">#<br><span id="visitor-number">125</span></div>
-        <div class="click">CLICK HERE↗</div>
+        <div class="counter">#<br><span id="visitor-number">1</span></div>
+        <div class="click">CLICK HERE-&gt;</div>
       </div>
 
       <div class="privacy">
-        PRIVACY↗<br>
+        PRIVACY-&gt;<br>
         <span style="color: var(--yellow);">!!!</span>
       </div>
     </div>
@@ -255,50 +213,64 @@
       >>> YOUR DATA:<span class="cursor">_</span>
     </div>
 
-    <div class="main-alert" id="main-alert">
-      DETECTING VISITOR...
-    </div>
+    <div class="main-alert" id="main-alert">DETECTING VISITOR...</div>
 
     <section class="board" id="data-board">
       <div class="row hot" data-key="ip">
-        <span>#126</span><span class="label">IP ADDRESS</span><span class="value">LOADING...</span>
+        <span>#1</span><span class="label">IP</span><span class="value">LOADING...</span>
       </div>
-
       <div class="row" data-key="location">
-        <span>#127</span><span class="label">LOCATION</span><span class="value">LOADING...</span>
+        <span>#2</span><span class="label">LOCATION</span><span class="value">LOADING...</span>
       </div>
-
-      <div class="row" data-key="isp">
-        <span>#128</span><span class="label">ISP / ORG</span><span class="value">LOADING...</span>
+      <div class="row" data-key="org">
+        <span>#3</span><span class="label">ISP / ORG</span><span class="value">LOADING...</span>
       </div>
-
       <div class="row blue" data-key="device">
-        <span>#129</span><span class="label">DEVICE</span><span class="value">LOADING...</span>
+        <span>#4</span><span class="label">DEVICE</span><span class="value">LOADING...</span>
       </div>
-
       <div class="row" data-key="screen">
-        <span>#130</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
+        <span>#5</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
       </div>
-
       <div class="row" data-key="language">
-        <span>#131</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
+        <span>#6</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
       </div>
-
       <div class="row" data-key="timezone">
-        <span>#132</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
+        <span>#7</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
       </div>
-
       <div class="row" data-key="referrer">
-        <span>#133</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
+        <span>#8</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
       </div>
-
+      <div class="row" data-key="asn">
+        <span>#9</span><span class="label">ASN</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="hostname">
+        <span>#10</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="currency">
+        <span>#11</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="postal">
+        <span>#12</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="coordinates">
+        <span>#13</span><span class="label">COORDS</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="network">
+        <span>#14</span><span class="label">NETWORK</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row" data-key="risk">
+        <span>#15</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
+      </div>
+      <div class="row hot" data-key="sources">
+        <span>#16</span><span class="label">SOURCES</span><span class="value">LOADING...</span>
+      </div>
       <div class="row hot" data-key="privacy">
-        <span>#134</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
+        <span>#17</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
       </div>
     </section>
 
     <p class="disclaimer">
-      This demo does not store, sell, or share your data. It only shows what your browser and network can expose when you enter a website.
+      This demo queries multiple public IP intelligence endpoints directly in the browser. Some sources require API keys, so unavailable services are skipped and only successful responses are reflected on screen.
     </p>
   </main>
 
@@ -333,33 +305,212 @@
       }, delay);
     }
 
-    function getBestGeoData(ipapi, geojs) {
+    function normalizeString(...values) {
+      return values.find((value) => typeof value === "string" && value.trim()) || "UNKNOWN";
+    }
+
+    function normalizeNumber(...values) {
+      return values.find((value) => value !== undefined && value !== null && value !== "") ?? "UNKNOWN";
+    }
+
+    async function getJson(url) {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      return response.json();
+    }
+
+    function getRiskFlags(payloads) {
+      const flags = [];
+
+      if (payloads.ipapi?.in_eu === true) flags.push("EU");
+      if (payloads.ipregistry?.security?.is_vpn) flags.push("VPN");
+      if (payloads.ipregistry?.security?.is_proxy) flags.push("PROXY");
+      if (payloads.ipregistry?.security?.is_tor) flags.push("TOR");
+      if (payloads.vpnapi?.security?.vpn) flags.push("VPNAPI:VPN");
+      if (payloads.vpnapi?.security?.proxy) flags.push("VPNAPI:PROXY");
+      if (payloads.vpnapi?.security?.tor) flags.push("VPNAPI:TOR");
+      if (payloads.scamalytics?.is_proxy) flags.push("SCAM:PROXY");
+      if (payloads.scamalytics?.is_vpn) flags.push("SCAM:VPN");
+      if (payloads.scamalytics?.is_tor) flags.push("SCAM:TOR");
+      if (payloads.ipqualityscore?.vpn) flags.push("IQS:VPN");
+      if (payloads.ipqualityscore?.proxy) flags.push("IQS:PROXY");
+      if (payloads.ipqualityscore?.tor) flags.push("IQS:TOR");
+      if (payloads.ipqualityscore?.fraud_score !== undefined) flags.push(`FRAUD:${payloads.ipqualityscore.fraud_score}`);
+
+      return flags.length ? flags.join(" / ") : "NO EXTRA FLAGS";
+    }
+
+    function collectData(payloads) {
+      const lat = normalizeNumber(
+        payloads.ipapi?.latitude,
+        payloads.ipwhois?.latitude,
+        payloads.freeipapi?.latitude,
+        payloads.ipapiCom?.lat,
+        payloads.bigdatacloud?.latitude
+      );
+
+      const lon = normalizeNumber(
+        payloads.ipapi?.longitude,
+        payloads.ipwhois?.longitude,
+        payloads.freeipapi?.longitude,
+        payloads.ipapiCom?.lon,
+        payloads.bigdatacloud?.longitude
+      );
+
       return {
-        ip: ipapi.ip || geojs.ip || "UNKNOWN",
-        city: ipapi.city || geojs.city || "UNKNOWN",
-        region: ipapi.region || geojs.region || "UNKNOWN",
-        country: ipapi.country_name || geojs.country || "UNKNOWN",
-        org: ipapi.org || geojs.organization_name || "UNKNOWN",
-        timezone: ipapi.timezone || geojs.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || "UNKNOWN"
+        ip: normalizeString(
+          payloads.ipify?.ip,
+          payloads.ipify64?.ip,
+          payloads.ipapi?.ip,
+          payloads.geojs?.ip,
+          payloads.ipinfo?.ip,
+          payloads.dbip?.ipAddress,
+          payloads.ifconfig?.ip_addr,
+          payloads.ipwhois?.ip,
+          payloads.ipapiCom?.query,
+          payloads.bigdatacloud?.ipString
+        ),
+        city: normalizeString(
+          payloads.ipapi?.city,
+          payloads.geojs?.city,
+          payloads.ipinfo?.city,
+          payloads.ipwhois?.city,
+          payloads.freeipapi?.cityName,
+          payloads.ipapiCom?.city,
+          payloads.bigdatacloud?.locality
+        ),
+        region: normalizeString(
+          payloads.ipapi?.region,
+          payloads.geojs?.region,
+          payloads.ipinfo?.region,
+          payloads.ipwhois?.region,
+          payloads.freeipapi?.regionName,
+          payloads.ipapiCom?.regionName,
+          payloads.bigdatacloud?.principalSubdivision
+        ),
+        country: normalizeString(
+          payloads.ipapi?.country_name,
+          payloads.geojs?.country,
+          payloads.ipinfo?.country,
+          payloads.ipwhois?.country,
+          payloads.freeipapi?.countryName,
+          payloads.ipapiCom?.country,
+          payloads.bigdatacloud?.countryName
+        ),
+        org: normalizeString(
+          payloads.ipapi?.org,
+          payloads.geojs?.organization_name,
+          payloads.ipinfo?.org,
+          payloads.ipwhois?.connection?.isp,
+          payloads.freeipapi?.isp,
+          payloads.dbip?.isp,
+          payloads.ifconfig?.as_name,
+          payloads.ipapiCom?.isp,
+          payloads.bigdatacloud?.networkOrganisation
+        ),
+        timezone: normalizeString(
+          payloads.ipapi?.timezone,
+          payloads.geojs?.timezone,
+          payloads.ipinfo?.timezone,
+          payloads.ipwhois?.timezone?.id,
+          payloads.freeipapi?.timeZone,
+          payloads.ipapiCom?.timezone,
+          payloads.bigdatacloud?.localityInfo?.administrative?.[0]?.isoName,
+          Intl.DateTimeFormat().resolvedOptions().timeZone
+        ),
+        asn: normalizeString(
+          payloads.ipapi?.asn,
+          payloads.ipinfo?.org?.split(" ")[0],
+          payloads.ipwhois?.connection?.asn,
+          payloads.freeipapi?.asn,
+          payloads.dbip?.asNumber,
+          payloads.ifconfig?.asn,
+          payloads.ipapiCom?.as,
+          payloads.bigdatacloud?.network?.autonomousSystemNumber
+        ),
+        hostname: normalizeString(
+          payloads.ipapi?.hostname,
+          payloads.ipwhois?.connection?.domain,
+          payloads.dbip?.domainName,
+          payloads.ifconfig?.hostname
+        ),
+        currency: normalizeString(
+          payloads.ipapi?.currency,
+          payloads.ipwhois?.currency?.code,
+          payloads.freeipapi?.currency?.code,
+          payloads.bigdatacloud?.currency?.code
+        ),
+        postal: normalizeString(
+          payloads.ipapi?.postal,
+          payloads.ipinfo?.postal,
+          payloads.ipwhois?.postal,
+          payloads.freeipapi?.zipCode,
+          payloads.ipapiCom?.zipCode,
+          payloads.bigdatacloud?.postcode
+        ),
+        coordinates: lat !== "UNKNOWN" && lon !== "UNKNOWN" ? `${lat}, ${lon}` : "UNKNOWN",
+        network: normalizeString(
+          payloads.ipregistry?.company?.name,
+          payloads.vpnapi?.location?.country,
+          payloads.ipapiCom?.asname,
+          payloads.bigdatacloud?.network?.organisation
+        ),
+        sources: Object.entries(payloads)
+          .filter(([, value]) => value && !value.error)
+          .map(([name]) => name.toUpperCase())
+          .join(" / "),
+        risk: getRiskFlags(payloads)
       };
+    }
+
+    async function fetchAllData() {
+      const payloads = {};
+
+      const ipOnly = await Promise.allSettled([
+        getJson("https://api.ipify.org?format=json"),
+        getJson("https://api64.ipify.org?format=json")
+      ]);
+
+      payloads.ipify = ipOnly[0].status === "fulfilled" ? ipOnly[0].value : { error: true };
+      payloads.ipify64 = ipOnly[1].status === "fulfilled" ? ipOnly[1].value : { error: true };
+
+      const ip = normalizeString(payloads.ipify.ip, payloads.ipify64.ip);
+
+      const requests = [
+        ["ipapi", () => getJson("https://ipapi.co/json/")],
+        ["geojs", () => getJson("https://get.geojs.io/v1/ip/geo.json")],
+        ["ipinfo", () => getJson("https://ipinfo.io/json")],
+        ["ipwhois", () => getJson("https://ipwho.is/")],
+        ["freeipapi", () => getJson("https://freeipapi.com/api/json")],
+        ["dbip", () => getJson("https://api.db-ip.com/v2/free/self")],
+        ["ifconfig", () => getJson("https://ifconfig.me/all.json")],
+        ["ipapiCom", () => getJson("https://ip-api.com/json/")],
+        ["bigdatacloud", () => getJson("https://api.bigdatacloud.net/data/client-info")],
+        ["ipregistry", () => getJson(`https://api.ipregistry.co/${ip}?key=YOUR_API_KEY`)],
+        ["ipqualityscore", () => getJson(`https://ipqualityscore.com/api/json/ip/YOUR_API_KEY/${ip}`)],
+        ["scamalytics", () => getJson(`https://api.scamalytics.com/v1/query/${ip}?api_key=YOUR_API_KEY`)],
+        ["vpnapi", () => getJson(`https://vpnapi.io/api/${ip}?key=YOUR_API_KEY`)]
+      ];
+
+      const settled = await Promise.allSettled(
+        requests.map(async ([name, loader]) => [name, await loader()])
+      );
+
+      settled.forEach((result) => {
+        if (result.status === "fulfilled") {
+          const [name, value] = result.value;
+          payloads[name] = value;
+        }
+      });
+
+      return collectData(payloads);
     }
 
     async function fetchAndDisplay() {
       try {
-        const [ipapi, geojs] = await Promise.all([
-          fetch("https://ipapi.co/json/")
-            .then((r) => r.json())
-            .catch((err) => ({ error: err.message })),
-
-          fetch("https://get.geojs.io/v1/ip/geo.json")
-            .then((r) => r.json())
-            .catch((err) => ({ error: err.message }))
-        ]);
-
-        const data = getBestGeoData(ipapi, geojs);
-
+        const data = await fetchAllData();
         const timestamp = new Date().toLocaleString("en-US", {
-          timeZone: data.timezone,
+          timeZone: data.timezone !== "UNKNOWN" ? data.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone,
           weekday: "short",
           month: "short",
           day: "2-digit",
@@ -370,23 +521,31 @@
 
         document.getElementById("main-alert").textContent = `${data.ip}  ${timestamp}`;
 
-        setRow("ip", data.ip, 80);
-        setRow("location", `${data.city}, ${data.region}, ${data.country}`, 180);
-        setRow("isp", data.org, 280);
-        setRow("device", getBrowserInfo(), 380);
-        setRow("screen", `${window.screen.width} x ${window.screen.height}`, 480);
-        setRow("language", navigator.language.toUpperCase(), 580);
-        setRow("timezone", data.timezone.toUpperCase(), 680);
-        setRow("referrer", document.referrer || "DIRECT / HIDDEN", 780);
-        setRow("privacy", "NOT STORED. SHOWN LOCALLY.", 880);
-      } catch (err) {
+        setRow("ip", data.ip, 50);
+        setRow("location", `${data.city}, ${data.region}, ${data.country}`, 100);
+        setRow("org", data.org, 150);
+        setRow("device", getBrowserInfo(), 200);
+        setRow("screen", `${window.screen.width} x ${window.screen.height}`, 250);
+        setRow("language", navigator.language.toUpperCase(), 300);
+        setRow("timezone", data.timezone.toUpperCase(), 350);
+        setRow("referrer", document.referrer || "DIRECT / HIDDEN", 400);
+        setRow("asn", data.asn, 450);
+        setRow("hostname", data.hostname, 500);
+        setRow("currency", data.currency, 550);
+        setRow("postal", data.postal, 600);
+        setRow("coordinates", data.coordinates, 650);
+        setRow("network", data.network, 700);
+        setRow("risk", data.risk, 750);
+        setRow("sources", data.sources || "NO PUBLIC SOURCES RESPONDED", 800);
+        setRow("privacy", "NOT STORED. SHOWN LOCALLY.", 850);
+      } catch (error) {
         document.getElementById("main-alert").textContent = "ERROR DETECTING VISITOR";
       }
     }
 
     window.addEventListener("DOMContentLoaded", () => {
       fetchAndDisplay();
-      setInterval(fetchAndDisplay, 10000);
+      setInterval(fetchAndDisplay, 15000);
     });
   </script>
 </body>
