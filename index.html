@@ -11,7 +11,7 @@
       --yellow: #ffc800;
       --blue: #39aaff;
       --red: #ff1a1a;
-      --gray: #8b9198;
+      --gray: #8d949c;
       --green: #63ff5b;
       --hero-pad: clamp(14px, 1.6vw, 28px);
       --hero-gap: clamp(8px, 1vh, 16px);
@@ -57,7 +57,7 @@
       background-size: 100% 28px, 28px 100%, auto;
     }
 
-    .topline {
+    .top {
       display: flex;
       align-items: flex-start;
       justify-content: flex-start;
@@ -70,6 +70,7 @@
       line-height: 0.82;
       letter-spacing: 0.04em;
       font-weight: bold;
+      max-width: none;
       text-transform: uppercase;
     }
 
@@ -91,6 +92,7 @@
       font-size: var(--alert);
       line-height: 0.95;
       font-weight: bold;
+      overflow-wrap: anywhere;
       text-transform: uppercase;
     }
 
@@ -103,7 +105,6 @@
       display: block;
       margin-top: 8px;
       color: var(--green);
-      text-shadow: 0 0 10px rgba(99, 255, 91, 0.45);
     }
 
     .board {
@@ -118,9 +119,9 @@
       display: grid;
       grid-template-columns: var(--number-col) var(--label-col) minmax(0, 1fr);
       gap: 14px;
-      align-items: start;
+      align-items: baseline;
       font-size: var(--row-font);
-      line-height: 0.88;
+      line-height: 1;
       color: var(--gray);
       opacity: 0.42;
       text-transform: uppercase;
@@ -145,22 +146,19 @@
     .num {
       color: inherit;
       font-size: var(--number-font);
-      line-height: 0.95;
+      line-height: 1;
       white-space: pre-line;
-      padding-top: 4px;
-    }
-
-    .label,
-    .value {
-      color: inherit;
+      padding-top: 0;
     }
 
     .label {
       opacity: 0.9;
+      line-height: 1;
     }
 
     .value {
       overflow-wrap: anywhere;
+      line-height: 1;
     }
 
     .disclaimer {
@@ -168,10 +166,10 @@
       left: var(--hero-pad);
       bottom: 18px;
       margin: 0;
-      max-width: min(96ch, calc(100vw - (var(--hero-pad) * 2)));
+      max-width: min(92ch, calc(100vw - (var(--hero-pad) * 2)));
       color: var(--gray);
       font-size: clamp(0.64rem, 0.82vw, 0.8rem);
-      line-height: 1.25;
+      line-height: 1.28;
       background: rgba(0, 0, 0, 0.72);
       padding: 8px 0;
       text-transform: uppercase;
@@ -201,12 +199,17 @@
         --label-col: 92px;
       }
 
+      .top {
+        display: block;
+      }
+
       .row {
         gap: 8px;
       }
 
       .disclaimer {
         position: static;
+        font-size: 0.64rem;
         max-width: none;
         padding: 0;
       }
@@ -215,8 +218,10 @@
 </head>
 <body>
   <main class="hero">
-    <div class="topline">
-      <div class="click">CLICK HERE↗</div>
+    <div class="top">
+      <div>
+        <div class="click">CLICK HERE-&gt;</div>
+      </div>
     </div>
 
     <div class="blue-line">
@@ -323,8 +328,7 @@
       keys: 0,
       maxScrollY: 0,
       lastActiveAt: Date.now(),
-      idlePeriods: 0,
-      lastIdleBucket: 0
+      idlePeriods: 0
     };
 
     function getBrowserInfo() {
@@ -370,7 +374,6 @@
       items.push(navigator.cookieEnabled ? "COOKIES ON" : "COOKIES OFF");
       items.push(window.localStorage ? "LOCALSTORAGE" : "NO LOCALSTORAGE");
       items.push(window.sessionStorage ? "SESSIONSTORAGE" : "NO SESSIONSTORAGE");
-      items.push("PERSISTENT IDENTIFIERS POSSIBLE");
       return items.join(" / ");
     }
 
@@ -380,55 +383,25 @@
       items.push(navigator.doNotTrack === "1" ? "DNT ON" : "DNT OFF");
       items.push(navigator.onLine ? "ONLINE" : "OFFLINE");
       items.push(`HISTORY:${window.history.length}`);
-      items.push(window.matchMedia("(pointer: fine)").matches ? "MOUSE-CAPABLE" : "COARSE-POINTER");
       return items.join(" / ");
-    }
-
-    function summarizeAdTech() {
-      const items = [];
-      items.push("THIRD-PARTY IP LOOKUPS");
-      items.push(document.referrer ? "REFERRER PASS-THROUGH" : "DIRECT ENTRY");
-      items.push(navigator.globalPrivacyControl ? "GPC ON" : "GPC OFF/NA");
-      items.push(navigator.cookieEnabled ? "COOKIE TARGETABLE" : "COOKIE LIMITED");
-      items.push("CROSS-SITE PROFILE ENRICHMENT POSSIBLE");
-      return items.join(" / ");
-    }
-
-    function buildFingerprint() {
-      const parts = [
-        navigator.userAgent,
-        navigator.language,
-        `${window.screen.width}x${window.screen.height}`,
-        Intl.DateTimeFormat().resolvedOptions().timeZone,
-        navigator.hardwareConcurrency || "NA",
-        navigator.deviceMemory || "NA",
-        navigator.platform || "NA",
-        window.devicePixelRatio || 1
-      ];
-
-      return parts.join(" | ").toUpperCase();
     }
 
     function estimateDistanceFromCenter(city, coords) {
-      let latRaw = 19.4326;
-      let lonRaw = -99.1332;
-
-      if (coords && coords.includes(",")) {
-        const parts = coords.split(",");
-        const parsedLat = Number.parseFloat(parts[0].trim());
-        const parsedLon = Number.parseFloat(parts[1].trim());
-        if (!Number.isNaN(parsedLat)) latRaw = parsedLat;
-        if (!Number.isNaN(parsedLon)) lonRaw = parsedLon;
+      if (!city || city === "UNKNOWN" || !coords || coords === "UNKNOWN") {
+        return "CITY CENTER DISTANCE ESTIMATE UNAVAILABLE";
       }
 
-      const pseudoDistance = Math.max(2, Math.min(18, Math.round((Math.abs(latRaw % 1) + Math.abs(lonRaw % 1)) * 12)));
-      const safeCity = city && city !== "UNKNOWN" ? city.toUpperCase() : "CITY";
-      return `${pseudoDistance} KM FROM ${safeCity} CENTER`;
+      const [latRaw, lonRaw] = coords.split(",").map((value) => Number.parseFloat(value.trim()));
+      if (Number.isNaN(latRaw) || Number.isNaN(lonRaw)) {
+        return "CITY CENTER DISTANCE ESTIMATE UNAVAILABLE";
+      }
+
+      const pseudoDistance = Math.max(2, Math.min(18, Math.round(((Math.abs(latRaw % 1) + Math.abs(lonRaw % 1)) * 12))));
+      return `${pseudoDistance} KM FROM ${city.toUpperCase()} CENTER`;
     }
 
     function updateActivity() {
       interactionState.lastActiveAt = Date.now();
-      interactionState.lastIdleBucket = 0;
     }
 
     function getIdleMessage() {
@@ -451,38 +424,33 @@
     function buildProfile(data) {
       const profile = [];
       const hour = new Date().getHours();
-      const incomeTier = ((navigator.deviceMemory || 0) >= 8 || (navigator.hardwareConcurrency || 0) >= 8 || window.devicePixelRatio >= 2)
-        ? "UPPER-MID TO HIGH"
-        : "MID";
 
-      profile.push(`ESTIMATED INCOME TIER: ${incomeTier}`);
-      profile.push((navigator.hardwareConcurrency || 0) >= 8 ? "LIKELY TECH-SAVVY" : "LIKELY DIGITAL CONSUMER");
-      profile.push((data.org || "").match(/business|telecom|fiber|cloud|communications|corp|enterprise/i) ? "LIKELY BUSINESS USER" : "LIKELY HOME OFFICE USER");
-      profile.push(/android|iphone|ios/i.test(navigator.userAgent) ? "LIKELY MOBILE COMMUTER" : "LIKELY DESKTOP-HEAVY USER");
-
+      if ((data.org || "").match(/cloud|fiber|telecom|communications|net|broadband/i)) {
+        profile.push("CONNECTED HOME OR OFFICE USER");
+      }
       if ((navigator.language || "").toLowerCase().startsWith("en")) {
         profile.push("ENGLISH SPEAKER");
       } else if ((navigator.language || "").toLowerCase().startsWith("es")) {
         profile.push("SPANISH SPEAKER");
       }
-
       if ((navigator.deviceMemory || 0) >= 8 || window.devicePixelRatio >= 2) {
         profile.push("HIGH-END DEVICE");
       }
-
+      if ((navigator.hardwareConcurrency || 0) >= 8) {
+        profile.push("TECHNOLOGY USER");
+      }
       if (hour >= 22 || hour <= 4) {
-        profile.push("LATE-NIGHT ACTIVITY PATTERNS");
+        profile.push("NIGHT ACTIVITY PATTERNS");
       } else if (hour >= 18) {
         profile.push("EVENING ACTIVITY PATTERNS");
       } else {
         profile.push("DAYTIME ACTIVITY PATTERNS");
       }
-
       if (data.risk.includes("VPN") || data.risk.includes("PROXY")) {
         profile.push("PRIVACY-SEEKING TRAFFIC");
       }
 
-      return `LIKELY AD PROFILE: ${profile.slice(0, 7).join(" / ")}`;
+      return `LIKELY AD PROFILE: ${profile.slice(0, 4).join(" / ") || "GENERAL WEB USER"}`;
     }
 
     function updateClock() {
@@ -532,17 +500,37 @@
 
       setInterval(() => {
         const idleSeconds = Math.floor((Date.now() - interactionState.lastActiveAt) / 1000);
-        const idleBucket = Math.floor(idleSeconds / 12);
-
-        if (idleBucket > interactionState.lastIdleBucket) {
+        if (idleSeconds > 0 && idleSeconds % 12 === 0) {
           interactionState.idlePeriods += 1;
-          interactionState.lastIdleBucket = idleBucket;
+          interactionState.lastActiveAt = Date.now() - 1000;
         }
-
         setRow("realtime", getRealtimeInputsMessage());
         setRow("idle", getIdleMessage());
         updateClock();
       }, 1000);
+    }
+
+    function summarizeAdTech() {
+      const items = [];
+      items.push("THIRD-PARTY IP LOOKUPS");
+      items.push(document.referrer ? "REFERRER PASS-THROUGH" : "DIRECT ENTRY");
+      items.push(navigator.globalPrivacyControl ? "GPC ON" : "GPC OFF/NA");
+      items.push(navigator.cookieEnabled ? "COOKIE TARGETABLE" : "COOKIE LIMITED");
+      return items.join(" / ");
+    }
+
+    function buildFingerprint() {
+      const parts = [
+        navigator.userAgent,
+        navigator.language,
+        `${window.screen.width}x${window.screen.height}`,
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
+        navigator.hardwareConcurrency || "NA",
+        navigator.deviceMemory || "NA",
+        navigator.platform || "NA"
+      ];
+
+      return parts.join(" | ").toUpperCase();
     }
 
     async function getJson(url) {
@@ -647,6 +635,7 @@
           payloads.ipwhois?.timezone?.id,
           payloads.freeipapi?.timeZone,
           payloads.ipapiCom?.timezone,
+          payloads.bigdatacloud?.localityInfo?.administrative?.[0]?.isoName,
           Intl.DateTimeFormat().resolvedOptions().timeZone
         ),
         asn: normalizeString(
@@ -679,7 +668,7 @@
           payloads.ipapiCom?.zipCode,
           payloads.bigdatacloud?.postcode
         ),
-        coordinates: lat !== "UNKNOWN" && lon !== "UNKNOWN" ? `${lat}, ${lon}` : "19.4326, -99.1332",
+        coordinates: lat !== "UNKNOWN" && lon !== "UNKNOWN" ? `${lat}, ${lon}` : "UNKNOWN",
         network: normalizeString(
           payloads.ipregistry?.company?.name,
           payloads.vpnapi?.location?.country,
@@ -747,7 +736,6 @@
           day: "2-digit",
           hour: "2-digit",
           minute: "2-digit",
-          second: "2-digit",
           timeZoneName: "short"
         }).toUpperCase();
 
@@ -761,11 +749,11 @@
         setRow("org", data.org, 150);
         setRow("device", getBrowserInfo(), 200);
         setRow("platform", (navigator.platform || "UNKNOWN").toUpperCase(), 250);
-        setRow("screen", `${window.screen.width} X ${window.screen.height} / DPR ${window.devicePixelRatio || 1}`, 300);
+        setRow("screen", `${window.screen.width} x ${window.screen.height} / DPR ${window.devicePixelRatio || 1}`, 300);
         setRow("language", navigator.language.toUpperCase(), 350);
         setRow("timezone", data.timezone.toUpperCase(), 400);
         setRow("cpu", `${navigator.hardwareConcurrency || "?"} CORES / ${navigator.deviceMemory || "?"}GB`, 450);
-        setRow("touch", `${navigator.maxTouchPoints || 0} POINTS / ${window.matchMedia("(pointer: fine)").matches ? "FINE POINTER" : "TOUCH-FIRST"}`, 500);
+        setRow("touch", `${navigator.maxTouchPoints || 0} POINTS`, 500);
         setRow("referrer", document.referrer || "DIRECT / HIDDEN", 550);
         setRow("asn", data.asn, 600);
         setRow("hostname", data.hostname, 650);
@@ -785,11 +773,7 @@
         setRow("profile", buildProfile(data), 1350);
         updateClock();
       } catch (error) {
-        document.getElementById("main-alert").innerHTML = `
-          <span class="warning-copy">NOW IMAGINE: 300 WEBSITES. SHARING THIS DATA. FOR YEARS. WITHOUT YOU SEEING IT.</span>
-          <span class="live-time" id="live-time"></span>
-        `;
-        updateClock();
+        document.getElementById("main-alert").textContent = "ERROR DETECTING VISITOR";
       }
     }
 
@@ -802,5 +786,3 @@
 </body>
 </html>
 ```
-
-I removed the `SHOP-> !!!`, re-enabled vertical scrolling, and made the info rows much larger and more dominant so the values carry the visual weight instead of those tiny boxed rows.
