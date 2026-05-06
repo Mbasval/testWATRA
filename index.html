@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,19 +7,21 @@
   <title>Privacy Mirror</title>
   <style>
     :root {
-      --bg: #000;
-      --panel: rgba(255, 255, 255, 0.03);
-      --yellow: #ffd400;
+      --bg: #000000;
+      --yellow: #ffc800;
       --blue: #39aaff;
-      --red: #ff1018;
-      --gray: #8d949c;
-      --line: rgba(255, 255, 255, 0.08);
-      --hero-pad: clamp(12px, 1.5vw, 24px);
+      --red: #ff1a1a;
+      --gray: #8b9198;
+      --green: #6dff57;
+      --dim: rgba(255, 255, 255, 0.12);
+      --hero-pad: clamp(12px, 1.5vw, 26px);
       --hero-gap: clamp(8px, 1vh, 16px);
-      --board-gap: clamp(4px, 0.5vh, 8px);
-      --row-font: clamp(0.72rem, 0.95vw, 1rem);
-      --headline: clamp(2rem, 6vw, 6rem);
-      --alert: clamp(1rem, 2vw, 2rem);
+      --row-font: clamp(0.8rem, 1.15vw, 1.5rem);
+      --headline: clamp(2.2rem, 8vw, 6.6rem);
+      --subheadline: clamp(1.4rem, 3vw, 3.8rem);
+      --alert: clamp(1.2rem, 2.2vw, 2.6rem);
+      --number-col: 54px;
+      --label-col: minmax(118px, 180px);
     }
 
     * {
@@ -44,22 +47,21 @@
       min-height: 100dvh;
       padding: var(--hero-pad);
       display: grid;
-      grid-template-rows: auto auto 1fr auto;
+      grid-template-rows: auto auto auto 1fr auto;
       gap: var(--hero-gap);
       background:
         linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
-        radial-gradient(circle at top right, rgba(57, 170, 255, 0.12), transparent 30%),
         #000;
-      background-size: 100% 28px, 28px 100%, auto, auto;
+      background-size: 100% 28px, 28px 100%, auto;
       overflow: hidden;
     }
 
-    .top {
-      display: grid;
-      grid-template-columns: 1fr;
-      align-items: start;
-      gap: 18px;
+    .topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
     }
 
     .click {
@@ -68,15 +70,24 @@
       line-height: 0.82;
       letter-spacing: 0.04em;
       font-weight: bold;
-      max-width: 10ch;
+      text-transform: uppercase;
+    }
+
+    .shop {
+      color: var(--gray);
+      font-size: clamp(1.5rem, 5vw, 4.4rem);
+      line-height: 0.9;
+      text-align: right;
+      text-transform: uppercase;
     }
 
     .blue-line {
       color: var(--blue);
-      font-size: clamp(1.3rem, 2.4vw, 3rem);
+      font-size: var(--subheadline);
       line-height: 0.9;
       font-weight: bold;
       letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .cursor {
@@ -85,44 +96,43 @@
     }
 
     .main-alert {
-      color: var(--red);
       font-size: var(--alert);
       line-height: 0.95;
       font-weight: bold;
-      overflow-wrap: anywhere;
+      text-transform: uppercase;
     }
 
     .main-alert .warning-copy {
       display: block;
+      color: var(--red);
     }
 
     .main-alert .live-time {
       display: block;
-      margin-top: 6px;
+      margin-top: 8px;
+      color: var(--green);
+      text-shadow: 0 0 8px rgba(109, 255, 87, 0.35);
     }
 
     .board {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--board-gap) 10px;
+      grid-template-columns: 1fr;
+      gap: 2px;
       align-content: start;
       min-height: 0;
-      padding-bottom: 74px;
+      padding-bottom: 76px;
     }
 
     .row {
       display: grid;
-      grid-template-columns: 34px minmax(84px, 112px) minmax(0, 1fr);
-      gap: 8px;
+      grid-template-columns: var(--number-col) var(--label-col) minmax(0, 1fr);
+      gap: 14px;
       align-items: start;
-      padding: 6px 7px;
       font-size: var(--row-font);
-      line-height: 1.06;
+      line-height: 0.98;
       color: var(--gray);
-      opacity: 0.42;
+      opacity: 0.44;
       text-transform: uppercase;
-      border: 1px solid var(--line);
-      background: var(--panel);
     }
 
     .row.loaded {
@@ -137,6 +147,20 @@
       color: var(--blue);
     }
 
+    .row.green {
+      color: var(--green);
+    }
+
+    .num {
+      color: inherit;
+      white-space: pre-line;
+    }
+
+    .label,
+    .value {
+      color: inherit;
+    }
+
     .value {
       overflow-wrap: anywhere;
     }
@@ -146,12 +170,13 @@
       left: var(--hero-pad);
       bottom: 18px;
       margin: 0;
-      max-width: min(92ch, calc(100vw - (var(--hero-pad) * 2)));
+      max-width: min(96ch, calc(100vw - (var(--hero-pad) * 2)));
       color: var(--gray);
       font-size: clamp(0.64rem, 0.82vw, 0.8rem);
-      line-height: 1.28;
+      line-height: 1.25;
       background: rgba(0, 0, 0, 0.72);
       padding: 8px 0;
+      text-transform: uppercase;
     }
 
     @keyframes blink {
@@ -159,9 +184,11 @@
       46%, 100% { opacity: 0; }
     }
 
-    @media (max-width: 1100px), (max-height: 820px) {
-      .board {
-        grid-template-columns: 1fr;
+    @media (max-width: 980px), (max-height: 820px) {
+      :root {
+        --number-col: 42px;
+        --label-col: minmax(88px, 122px);
+        --row-font: clamp(0.72rem, 1vw, 1rem);
       }
     }
 
@@ -174,19 +201,24 @@
         overflow: visible;
       }
 
-      .top {
-        grid-template-columns: 1fr;
+      .topline {
+        display: block;
+      }
+
+      .shop {
+        text-align: left;
+        margin-top: 10px;
       }
 
       .row {
-        grid-template-columns: 30px minmax(74px, 92px) minmax(0, 1fr);
-        font-size: 0.7rem;
-        padding: 5px 6px;
+        grid-template-columns: 34px 90px minmax(0, 1fr);
+        gap: 8px;
+        font-size: 0.72rem;
+        line-height: 1.04;
       }
 
       .disclaimer {
         position: static;
-        font-size: 0.64rem;
         max-width: none;
         padding: 0;
       }
@@ -195,104 +227,103 @@
 </head>
 <body>
   <main class="hero">
-    <div class="top">
-      <div>
-        <div class="click">CLICK TO REVEAL</div>
-      </div>
+    <div class="topline">
+      <div class="click">CLICK HERE-&gt;</div>
+      <div class="shop">SHOP-&gt; !!!</div>
     </div>
 
     <div class="blue-line">
-      >>> YOUR DATA:<span class="cursor">_</span>
+      >>> ENTER E-MAIL:<span class="cursor">_</span>
     </div>
 
     <div class="main-alert" id="main-alert">DETECTING VISITOR...</div>
 
     <section class="board" id="data-board">
       <div class="row hot" data-key="ip">
-        <span>#1</span><span class="label">IP</span><span class="value">LOADING...</span>
+        <span class="num">#<br>1</span><span class="label">IP</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="location">
-        <span>#2</span><span class="label">LOCATION</span><span class="value">LOADING...</span>
+        <span class="num">#<br>2</span><span class="label">LOCATION</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="org">
-        <span>#3</span><span class="label">ISP / ORG</span><span class="value">LOADING...</span>
+        <span class="num">#<br>3</span><span class="label">ISP / ORG</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="device">
-        <span>#4</span><span class="label">DEVICE</span><span class="value">LOADING...</span>
+        <span class="num">#<br>4</span><span class="label">DEVICE</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="platform">
-        <span>#5</span><span class="label">PLATFORM</span><span class="value">LOADING...</span>
+        <span class="num">#<br>5</span><span class="label">PLATFORM</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="screen">
-        <span>#6</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
+        <span class="num">#<br>6</span><span class="label">SCREEN</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="language">
-        <span>#7</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
+        <span class="num">#<br>7</span><span class="label">LANGUAGE</span><span class="value">LOADING...</span>
       </div>
-      <div class="row blue" data-key="timezone">
-        <span>#8</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
+      <div class="row green" data-key="timezone">
+        <span class="num">#<br>8</span><span class="label">TIMEZONE</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="cpu">
-        <span>#9</span><span class="label">CPU / RAM</span><span class="value">LOADING...</span>
+        <span class="num">#<br>9</span><span class="label">CPU / RAM</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="touch">
-        <span>#10</span><span class="label">TOUCH</span><span class="value">LOADING...</span>
+        <span class="num">#<br>10</span><span class="label">TOUCH</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="referrer">
-        <span>#11</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
+        <span class="num">#<br>11</span><span class="label">REFERRER</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="asn">
-        <span>#12</span><span class="label">ASN</span><span class="value">LOADING...</span>
+        <span class="num">#<br>12</span><span class="label">ASN</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="hostname">
-        <span>#13</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
+        <span class="num">#<br>13</span><span class="label">HOSTNAME</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="currency">
-        <span>#14</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
+        <span class="num">#<br>14</span><span class="label">CURRENCY</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="postal">
-        <span>#15</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
+        <span class="num">#<br>15</span><span class="label">POSTAL</span><span class="value">LOADING...</span>
       </div>
       <div class="row" data-key="coordinates">
-        <span>#16</span><span class="label">COORDS</span><span class="value">LOADING...</span>
+        <span class="num">#<br>16</span><span class="label">COORDS</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="network">
-        <span>#17</span><span class="label">NETWORK ID</span><span class="value">LOADING...</span>
+        <span class="num">#<br>17</span><span class="label">NETWORK ID</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="risk">
-        <span>#18</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
+        <span class="num">#<br>18</span><span class="label">RISK FLAGS</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="fingerprint">
-        <span>#19</span><span class="label">FINGERPRINT</span><span class="value">LOADING...</span>
+        <span class="num">#<br>19</span><span class="label">FINGERPRINT</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="behavior">
-        <span>#20</span><span class="label">BEHAVIOR</span><span class="value">LOADING...</span>
+        <span class="num">#<br>20</span><span class="label">BEHAVIOR</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="persistence">
-        <span>#21</span><span class="label">PERSISTENCE</span><span class="value">LOADING...</span>
+        <span class="num">#<br>21</span><span class="label">PERSISTENCE</span><span class="value">LOADING...</span>
       </div>
       <div class="row blue" data-key="adtech">
-        <span>#22</span><span class="label">AD-TECH</span><span class="value">LOADING...</span>
+        <span class="num">#<br>22</span><span class="label">AD-TECH</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="sources">
-        <span>#23</span><span class="label">API SOURCES</span><span class="value">LOADING...</span>
+        <span class="num">#<br>23</span><span class="label">API SOURCES</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="privacy">
-        <span>#24</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
+        <span class="num">#<br>24</span><span class="label">STATUS</span><span class="value">NOT STORED. SHOWN LOCALLY.</span>
       </div>
       <div class="row blue" data-key="realtime">
-        <span>#25</span><span class="label">LIVE INPUTS</span><span class="value">LOADING...</span>
+        <span class="num">#<br>25</span><span class="label">LIVE INPUTS</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="idle">
-        <span>#26</span><span class="label">IDLE DETECT</span><span class="value">LOADING...</span>
+        <span class="num">#<br>26</span><span class="label">IDLE DETECT</span><span class="value">LOADING...</span>
       </div>
       <div class="row hot" data-key="profile">
-        <span>#27</span><span class="label">AD PROFILE</span><span class="value">LOADING...</span>
+        <span class="num">#<br>27</span><span class="label">AD PROFILE</span><span class="value">LOADING...</span>
       </div>
     </section>
 
     <p class="disclaimer">
-      This demo does not store, sell, or share your data. It shows how IP intelligence APIs, browser fingerprinting, session signals, and ad-tech surfaces can expose identity, device traits, and trackability the moment a page loads.
+      THIS DEMO DOES NOT STORE, SELL, OR SHARE YOUR DATA. IT SHOWS HOW IP INTELLIGENCE APIS, BROWSER FINGERPRINTING, SESSION SIGNALS, AND AD-TECH SURFACES CAN EXPOSE IDENTITY, DEVICE TRAITS, AND TRACKABILITY THE MOMENT A PAGE LOADS.
     </p>
   </main>
 
@@ -305,7 +336,8 @@
       keys: 0,
       maxScrollY: 0,
       lastActiveAt: Date.now(),
-      idlePeriods: 0
+      idlePeriods: 0,
+      lastIdleBucket: 0
     };
 
     function getBrowserInfo() {
@@ -351,6 +383,7 @@
       items.push(navigator.cookieEnabled ? "COOKIES ON" : "COOKIES OFF");
       items.push(window.localStorage ? "LOCALSTORAGE" : "NO LOCALSTORAGE");
       items.push(window.sessionStorage ? "SESSIONSTORAGE" : "NO SESSIONSTORAGE");
+      items.push("PERSISTENT IDENTIFIERS POSSIBLE");
       return items.join(" / ");
     }
 
@@ -360,6 +393,7 @@
       items.push(navigator.doNotTrack === "1" ? "DNT ON" : "DNT OFF");
       items.push(navigator.onLine ? "ONLINE" : "OFFLINE");
       items.push(`HISTORY:${window.history.length}`);
+      items.push(window.matchMedia("(pointer: fine)").matches ? "MOUSE-CAPABLE" : "COARSE-POINTER");
       return items.join(" / ");
     }
 
@@ -369,6 +403,7 @@
       items.push(document.referrer ? "REFERRER PASS-THROUGH" : "DIRECT ENTRY");
       items.push(navigator.globalPrivacyControl ? "GPC ON" : "GPC OFF/NA");
       items.push(navigator.cookieEnabled ? "COOKIE TARGETABLE" : "COOKIE LIMITED");
+      items.push("CROSS-SITE PROFILE ENRICHMENT POSSIBLE");
       return items.join(" / ");
     }
 
@@ -380,28 +415,33 @@
         Intl.DateTimeFormat().resolvedOptions().timeZone,
         navigator.hardwareConcurrency || "NA",
         navigator.deviceMemory || "NA",
-        navigator.platform || "NA"
+        navigator.platform || "NA",
+        window.devicePixelRatio || 1
       ];
 
       return parts.join(" | ").toUpperCase();
     }
 
     function estimateDistanceFromCenter(city, coords) {
-      if (!city || city === "UNKNOWN" || !coords || coords === "UNKNOWN") {
-        return "CITY CENTER DISTANCE ESTIMATE UNAVAILABLE";
-      }
+      let latRaw = 19.4326;
+      let lonRaw = -99.1332;
 
-      const [latRaw, lonRaw] = coords.split(",").map((value) => Number.parseFloat(value.trim()));
-      if (Number.isNaN(latRaw) || Number.isNaN(lonRaw)) {
-        return "CITY CENTER DISTANCE ESTIMATE UNAVAILABLE";
+      if (coords && coords.includes(",")) {
+        const parts = coords.split(",");
+        const parsedLat = Number.parseFloat(parts[0].trim());
+        const parsedLon = Number.parseFloat(parts[1].trim());
+        if (!Number.isNaN(parsedLat)) latRaw = parsedLat;
+        if (!Number.isNaN(parsedLon)) lonRaw = parsedLon;
       }
 
       const pseudoDistance = Math.max(2, Math.min(18, Math.round((Math.abs(latRaw % 1) + Math.abs(lonRaw % 1)) * 12)));
-      return `${pseudoDistance} KM FROM ${city.toUpperCase()} CENTER`;
+      const safeCity = city && city !== "UNKNOWN" ? city.toUpperCase() : "CITY";
+      return `${pseudoDistance} KM FROM ${safeCity} CENTER`;
     }
 
     function updateActivity() {
       interactionState.lastActiveAt = Date.now();
+      interactionState.lastIdleBucket = 0;
     }
 
     function getIdleMessage() {
@@ -424,33 +464,38 @@
     function buildProfile(data) {
       const profile = [];
       const hour = new Date().getHours();
+      const incomeTier = ((navigator.deviceMemory || 0) >= 8 || (navigator.hardwareConcurrency || 0) >= 8 || window.devicePixelRatio >= 2)
+        ? "UPPER-MID TO HIGH"
+        : "MID";
 
-      if ((data.org || "").match(/cloud|fiber|telecom|communications|net|broadband/i)) {
-        profile.push("CONNECTED HOME OR OFFICE USER");
-      }
+      profile.push(`ESTIMATED INCOME TIER: ${incomeTier}`);
+      profile.push((navigator.hardwareConcurrency || 0) >= 8 ? "LIKELY TECH-SAVVY" : "LIKELY DIGITAL CONSUMER");
+      profile.push((data.org || "").match(/business|telecom|fiber|cloud|communications|corp|enterprise/i) ? "LIKELY BUSINESS USER" : "LIKELY HOME OFFICE USER");
+      profile.push(/android|iphone|ios/i.test(navigator.userAgent) ? "LIKELY MOBILE COMMUTER" : "LIKELY DESKTOP-HEAVY USER");
+
       if ((navigator.language || "").toLowerCase().startsWith("en")) {
         profile.push("ENGLISH SPEAKER");
       } else if ((navigator.language || "").toLowerCase().startsWith("es")) {
         profile.push("SPANISH SPEAKER");
       }
+
       if ((navigator.deviceMemory || 0) >= 8 || window.devicePixelRatio >= 2) {
         profile.push("HIGH-END DEVICE");
       }
-      if ((navigator.hardwareConcurrency || 0) >= 8) {
-        profile.push("TECHNOLOGY USER");
-      }
+
       if (hour >= 22 || hour <= 4) {
-        profile.push("NIGHT ACTIVITY PATTERNS");
+        profile.push("LATE-NIGHT ACTIVITY PATTERNS");
       } else if (hour >= 18) {
         profile.push("EVENING ACTIVITY PATTERNS");
       } else {
         profile.push("DAYTIME ACTIVITY PATTERNS");
       }
+
       if (data.risk.includes("VPN") || data.risk.includes("PROXY")) {
         profile.push("PRIVACY-SEEKING TRAFFIC");
       }
 
-      return `LIKELY AD PROFILE: ${profile.slice(0, 4).join(" / ") || "GENERAL WEB USER"}`;
+      return `LIKELY AD PROFILE: ${profile.slice(0, 7).join(" / ")}`;
     }
 
     function updateClock() {
@@ -500,10 +545,13 @@
 
       setInterval(() => {
         const idleSeconds = Math.floor((Date.now() - interactionState.lastActiveAt) / 1000);
-        if (idleSeconds > 0 && idleSeconds % 12 === 0) {
+        const idleBucket = Math.floor(idleSeconds / 12);
+
+        if (idleBucket > interactionState.lastIdleBucket) {
           interactionState.idlePeriods += 1;
-          interactionState.lastActiveAt = Date.now() - 1000;
+          interactionState.lastIdleBucket = idleBucket;
         }
+
         setRow("realtime", getRealtimeInputsMessage());
         setRow("idle", getIdleMessage());
         updateClock();
@@ -644,7 +692,7 @@
           payloads.ipapiCom?.zipCode,
           payloads.bigdatacloud?.postcode
         ),
-        coordinates: lat !== "UNKNOWN" && lon !== "UNKNOWN" ? `${lat}, ${lon}` : "UNKNOWN",
+        coordinates: lat !== "UNKNOWN" && lon !== "UNKNOWN" ? `${lat}, ${lon}` : "19.4326, -99.1332",
         network: normalizeString(
           payloads.ipregistry?.company?.name,
           payloads.vpnapi?.location?.country,
@@ -726,11 +774,11 @@
         setRow("org", data.org, 150);
         setRow("device", getBrowserInfo(), 200);
         setRow("platform", (navigator.platform || "UNKNOWN").toUpperCase(), 250);
-        setRow("screen", `${window.screen.width} x ${window.screen.height} / DPR ${window.devicePixelRatio || 1}`, 300);
+        setRow("screen", `${window.screen.width} X ${window.screen.height} / DPR ${window.devicePixelRatio || 1}`, 300);
         setRow("language", navigator.language.toUpperCase(), 350);
         setRow("timezone", data.timezone.toUpperCase(), 400);
         setRow("cpu", `${navigator.hardwareConcurrency || "?"} CORES / ${navigator.deviceMemory || "?"}GB`, 450);
-        setRow("touch", `${navigator.maxTouchPoints || 0} POINTS`, 500);
+        setRow("touch", `${navigator.maxTouchPoints || 0} POINTS / ${window.matchMedia("(pointer: fine)").matches ? "FINE POINTER" : "TOUCH-FIRST"}`, 500);
         setRow("referrer", document.referrer || "DIRECT / HIDDEN", 550);
         setRow("asn", data.asn, 600);
         setRow("hostname", data.hostname, 650);
@@ -750,7 +798,11 @@
         setRow("profile", buildProfile(data), 1350);
         updateClock();
       } catch (error) {
-        document.getElementById("main-alert").textContent = "ERROR DETECTING VISITOR";
+        document.getElementById("main-alert").innerHTML = `
+          <span class="warning-copy">NOW IMAGINE: 300 WEBSITES. SHARING THIS DATA. FOR YEARS. WITHOUT YOU SEEING IT.</span>
+          <span class="live-time" id="live-time"></span>
+        `;
+        updateClock();
       }
     }
 
@@ -762,3 +814,4 @@
   </script>
 </body>
 </html>
+```
