@@ -14,13 +14,13 @@
       --green: #63ff5b;
       --hero-pad: clamp(14px, 1.6vw, 28px);
       --hero-gap: clamp(8px, 1vh, 16px);
-      --headline: clamp(2.8rem, 8vw, 6.8rem);
-      --subheadline: clamp(1.8rem, 5vw, 4.4rem);
-      --alert: clamp(1.2rem, 2.2vw, 2.7rem);
-      --row-font: clamp(1.15rem, 2.2vw, 4rem);
-      --number-font: clamp(0.9rem, 1.25vw, 1.5rem);
-      --number-col: 76px;
-      --label-col: minmax(180px, 260px);
+      --headline: clamp(2.6rem, 7vw, 6rem);
+      --subheadline: clamp(1.6rem, 4.6vw, 3.8rem);
+      --alert: clamp(0.8rem, 1.2vw, 1.15rem);
+      --row-font: clamp(0.8rem, 1.25vw, 1.55rem);
+      --number-font: clamp(0.5rem, 0.72vw, 0.82rem);
+      --number-col: 34px;
+      --label-col: minmax(70px, 120px);
     }
 
     * {
@@ -60,13 +60,13 @@
       display: flex;
       align-items: flex-start;
       justify-content: flex-start;
-      gap: 20px;
+      gap: 14px;
     }
 
     .click {
       color: var(--yellow);
       font-size: var(--headline);
-      line-height: 0.82;
+      line-height: 0.9;
       letter-spacing: 0.04em;
       font-weight: bold;
       max-width: none;
@@ -76,7 +76,7 @@
     .blue-line {
       color: var(--blue);
       font-size: var(--subheadline);
-      line-height: 0.9;
+      line-height: 0.92;
       font-weight: bold;
       letter-spacing: 0.04em;
       text-transform: uppercase;
@@ -102,7 +102,7 @@
 
     .main-alert .live-time {
       display: block;
-      margin-top: 8px;
+      margin-top: 4px;
       color: var(--green);
       font-size: var(--row-font);
       line-height: 1;
@@ -111,7 +111,7 @@
     .board {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 4px;
+      gap: 0;
       align-content: start;
       padding-bottom: 60px;
     }
@@ -119,13 +119,14 @@
     .row {
       display: grid;
       grid-template-columns: var(--number-col) var(--label-col) minmax(0, 1fr);
-      gap: 22px;
+      gap: 12px;
       align-items: baseline;
       font-size: var(--row-font);
-      line-height: 1;
+      line-height: 0.92;
       color: var(--gray);
       opacity: 0.42;
       text-transform: uppercase;
+      margin: 0;
     }
 
     .row.loaded {
@@ -135,7 +136,7 @@
     .num {
       color: var(--gray);
       font-size: var(--number-font);
-      line-height: 1;
+      line-height: 0.92;
       white-space: pre-line;
       padding-top: 0;
     }
@@ -143,14 +144,14 @@
     .label {
       color: var(--gray);
       opacity: 0.9;
-      line-height: 1;
+      line-height: 0.92;
       white-space: nowrap;
     }
 
     .value {
       color: var(--gray);
       overflow-wrap: anywhere;
-      line-height: 1;
+      line-height: 0.92;
     }
 
     .disclaimer {
@@ -174,21 +175,22 @@
 
     @media (max-width: 1100px) {
       :root {
-        --row-font: clamp(0.95rem, 2vw, 2.2rem);
-        --number-col: 64px;
-        --label-col: minmax(130px, 190px);
+        --row-font: clamp(0.74rem, 1.4vw, 1.1rem);
+        --number-font: clamp(0.48rem, 0.68vw, 0.72rem);
+        --number-col: 30px;
+        --label-col: minmax(64px, 98px);
       }
     }
 
     @media (max-width: 720px) {
       :root {
         --headline: clamp(2.2rem, 12vw, 4.2rem);
-        --subheadline: clamp(1.2rem, 7vw, 2.4rem);
-        --alert: clamp(1rem, 4.8vw, 1.4rem);
-        --row-font: clamp(0.9rem, 4.6vw, 1.15rem);
-        --number-font: 0.8rem;
-        --number-col: 42px;
-        --label-col: 102px;
+        --subheadline: clamp(1.1rem, 7vw, 2.2rem);
+        --alert: clamp(0.72rem, 3.8vw, 0.95rem);
+        --row-font: clamp(0.74rem, 3.8vw, 0.95rem);
+        --number-font: 0.56rem;
+        --number-col: 28px;
+        --label-col: 70px;
       }
 
       .top {
@@ -196,7 +198,7 @@
       }
 
       .row {
-        gap: 12px;
+        gap: 8px;
       }
 
       .disclaimer {
